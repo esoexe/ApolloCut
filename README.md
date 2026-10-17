@@ -12,6 +12,8 @@
   <img alt="Platform" src="https://img.shields.io/badge/Platform-Windows-blue?style=for-the-badge">
   <img alt="Version" src="https://img.shields.io/badge/Version-1.3.3-blueviolet?style=for-the-badge">
   <a href="https://esoexe.github.io/ApolloCut/"><img alt="Website" src="https://img.shields.io/badge/Website-esoexe.github.io%2FApolloCut-41c7ff?style=for-the-badge"></a>
+  <a href="https://github.com/esoexe/ApolloCut/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/esoexe/ApolloCut?style=for-the-badge&color=e77bff"></a>
+  <a href="https://github.com/esoexe/ApolloCut/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/esoexe/ApolloCut/total?style=for-the-badge&color=39d98d"></a>
   <img alt="Built with" src="https://img.shields.io/badge/Built%20with-Electron%20%2B%20FFmpeg-8f6bff?style=for-the-badge">
 </p>
 
@@ -67,6 +69,8 @@ Grab the Windows installer (99 MB, everything bundled — no dependencies needed
 👉 **[github.com/esoexe/ApolloCut/releases/latest](https://github.com/esoexe/ApolloCut/releases/latest)** → download `ApolloCut-Setup-1.3.3-x64.exe`
 
 Releases are the official, permanent home of ApolloCut binaries — every version is built automatically from this exact source by GitHub Actions. Our website [esoexe.github.io/ApolloCut](https://esoexe.github.io/ApolloCut/) also points its download button at the newest Release automatically.
+
+▶️ **Watch the promo** (12 s): [docs/promo.mp4](docs/promo.mp4) · Launching ApolloCut or writing about it? Everything you need is in [docs/LAUNCH-KIT.md](docs/LAUNCH-KIT.md).
 
 ## 🔨 Build from source
 
