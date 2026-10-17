@@ -181,6 +181,17 @@ footer .cols{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;
 footer .cols span{display:flex;align-items:center;gap:8px}
 footer img{width:18px;height:18px;border-radius:50%}
 
+/* ── reactive motion layer v2 ── */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:70;background:linear-gradient(90deg,var(--gold),var(--vio));box-shadow:0 0 9px rgba(201,168,96,.55);transition:width .1s linear}
+.bandfig img{animation:kenburns 27s ease-in-out infinite alternate;transform-origin:58% 42%}
+@keyframes kenburns{from{transform:scale(1) translate(0,0)}to{transform:scale(1.075) translate(-1.4%,1%)}}
+.num{animation:numpulse 7s ease-in-out infinite}
+@keyframes numpulse{0%,100%{color:var(--gold);text-shadow:none}50%{color:#f0dcae;text-shadow:0 0 16px rgba(201,168,96,.5)}}
+footer .meander path{stroke-dasharray:1400;stroke-dashoffset:1400;transition:stroke-dashoffset 2s var(--ease)}
+footer .meander.draw path{stroke-dashoffset:0}
+.mag{display:inline-flex}
+#spot.bip{opacity:.85!important;transition:opacity .25s}
+
 /* motion gating + entrances */
 .anim-paused,.anim-paused *{animation-play-state:paused!important}
 .r{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
@@ -394,7 +405,7 @@ document.querySelectorAll('.r').forEach(el => io.observe(el));
 
 /* calm gating — continuous loops alive only while their zone is near view */
 (function(){
-  const zones = document.querySelectorAll('header, .strip, .editor, .final .halo');
+  const zones = document.querySelectorAll('header, .strip, .editor, .final .halo, .bandfig');
   zones.forEach(z => z.classList.add('anim-paused'));
   const zo = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('anim-paused', !e.isIntersecting)), {threshold:.04, rootMargin:'90px'});
   zones.forEach(z => zo.observe(z));
@@ -438,17 +449,77 @@ document.querySelectorAll('.r').forEach(el => io.observe(el));
     addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; if (!moved){ moved = true; document.body.classList.add('spot-on'); } }, {passive:true});
     addEventListener('pointerleave', () => document.body.classList.remove('spot-on'));
   }
-  const plate = document.querySelector('.plate .seal');
-  let sY = window.scrollY, drift = 0;
-  addEventListener('scroll', () => { sY = window.scrollY; }, {passive:true});
   (function loop(){
     sx += (tx - sx) * .07; sy += (ty - sy) * .07;
     if (moved) spot.style.transform = `translate3d(${sx}px,${sy}px,0)`;
-    const t = coarse ? 0 : Math.max(-16, Math.min(16, -sY * .04));
-    drift += (t - drift) * .09;
-    if (plate) plate.style.transform = `translate3d(0,${drift.toFixed(2)}px,0)`;
     requestAnimationFrame(loop);
   })();
+})();
+
+/* ── reactive engine v2: device-aware, scroll-scrubbed, touch-alive ── */
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* gold progress cord */
+  const bar = document.createElement('div');
+  bar.className = 'progress'; document.body.appendChild(bar);
+  addEventListener('scroll', () => {
+    const e = document.documentElement;
+    bar.style.width = (e.scrollTop / Math.max(1, e.scrollHeight - e.clientHeight) * 100) + '%';
+  }, {passive:true});
+
+  /* hero seal: drift + cursor-tilt (mouse) / gyro-tilt (mobile) — lerped, unifying */
+  const plate = document.querySelector('.plate .seal');
+  const fine = matchMedia('(pointer: fine)').matches;
+  let sY = window.scrollY, drift = 0, px = 0, py = 0, tpx = 0, tpy = 0;
+  addEventListener('scroll', () => { sY = window.scrollY; }, {passive:true});
+  if (fine){
+    addEventListener('pointermove', e => {
+      tpx = (e.clientX - innerWidth / 2) / (innerWidth / 2);
+      tpy = (e.clientY - innerHeight / 2) / (innerHeight / 2);
+    }, {passive:true});
+  } else if ('DeviceOrientationEvent' in window){
+    const onboard = g => { tpx = Math.max(-1, Math.min(1, (g.gamma || 0) / 10)); tpy = Math.max(-1, Math.min(1, ((g.beta || 0) - 45) / 12)); };
+    try {
+      if (typeof DeviceOrientationEvent.requestPermission === 'function'){
+        const ask = () => DeviceOrientationEvent.requestPermission().then(s => { if (s === 'granted') addEventListener('deviceorientation', onboard, {passive:true}); }, () => {});
+        addEventListener('touchend', ask, {once:true});
+      } else addEventListener('deviceorientation', onboard, {passive:true});
+    } catch(_){ /* gyro silent */ }
+  }
+  (function driftLoop(){
+    px += (tpx - px) * .05; py += (tpy - py) * .05;
+    const target = Math.max(-14, Math.min(14, -sY * .035));
+    drift += (target - drift) * .08;
+    if (plate) plate.style.transform = `translate3d(${(-px * 9).toFixed(2)}px, ${(drift + -py * 8).toFixed(2)}px, 0) rotate3d(${-py}, ${px}, 0, ${(Math.abs(px)+Math.abs(py)) * 2.4}deg)`;
+    requestAnimationFrame(driftLoop);
+  })();
+
+  /* touch torch — spotlight allegro for fingers */
+  const spot = document.getElementById('spot');
+  if (!fine && spot){
+    addEventListener('pointerdown', e => {
+      spot.style.transform = `translate3d(${e.clientX}px,${e.clientY}px,0)`;
+      spot.classList.add('bip'); document.body.classList.add('spot-on');
+      clearTimeout(spot._t); spot._t = setTimeout(() => { spot.classList.remove('bip'); document.body.classList.remove('spot-on'); }, 1600);
+    }, {passive:true});
+  }
+
+  /* magnetic buttons — pull the click toward you */
+  if (fine){
+    document.querySelectorAll('.btn, .star').forEach(b => {
+      b.parentElement && b.parentElement.classList.add('mag');
+      b.addEventListener('pointermove', e => {
+        const r = b.getBoundingClientRect();
+        b.style.transform = `translate(${Math.max(-5, Math.min(5, (e.clientX - r.left - r.width/2) * .16))}px, ${Math.max(-4, Math.min(4, (e.clientY - r.top - r.height/2) * .2))}px) translateY(-2px)`;
+      }, {passive:true});
+      b.addEventListener('pointerleave', () => { b.style.transform = ''; }, {passive:true});
+    });
+  }
+
+  /* meander draws itself */
+  const m = document.querySelector('footer .meander');
+  if (m) new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting){ m.classList.add('draw'); o.disconnect(); } }), {threshold:.35}).observe(m);
 })();
 
 /* live release arrows point straight at your OS */
