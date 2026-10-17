@@ -64,14 +64,9 @@ The blindfold in our icon isn't decoration. Editing tools shouldn't play favorit
 
 Grab the Windows installer (99 MB, everything bundled — no dependencies needed):
 
-> **Releases** provide the official downloads; this project builds its installer automatically on every release tag via GitHub Actions.
+👉 **[github.com/esoexe/ApolloCut/releases/latest](https://github.com/esoexe/ApolloCut/releases/latest)** → download `ApolloCut-Setup-1.3.3-x64.exe`
 
-While the very first CI release spins up, current binaries:
-
-- **Installer** `ApolloCut-Setup-1.3.3-x64.exe` → https://gofile.io/d/yfdbA5lG
-- **Portable zip** (no install) → https://gofile.io/d/6dDdQacF
-
-*(temporary mirrors — prefer the Releases page)*
+Releases are the official, permanent home of ApolloCut binaries — every version is built automatically from this exact source by GitHub Actions. Our website [esoexe.github.io/ApolloCut](https://esoexe.github.io/ApolloCut/) also points its download button at the newest Release automatically.
 
 ## 🔨 Build from source
 
