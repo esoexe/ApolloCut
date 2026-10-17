@@ -40,19 +40,26 @@ header .wrap{display:grid;grid-template-columns:1.04fr .96fr;gap:56px;align-item
 .pt{position:absolute;width:4px;height:4px;border-radius:50%;background:#d8caff;opacity:.5;animation:rise 9s linear infinite}
 @keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.55}85%{opacity:.5}100%{transform:translateY(-340px);opacity:0}}
 
-/* museum portrait column */
+/* museum hero art */
 .pcol{position:relative;width:max-content;margin:0 auto}
-.frame{position:relative;border-radius:26px;box-shadow:0 46px 110px -28px rgba(0,0,0,.9),0 0 0 1px rgba(143,107,255,.25)}
-.frame img{display:block;width:min(360px,74vw);border-radius:26px}
+.frame{position:relative;border-radius:26px;box-shadow:0 46px 110px -28px rgba(0,0,0,.9),0 0 0 1px rgba(143,107,255,.25);overflow:hidden}
+.frame img{display:block;width:min(430px,78vw);border-radius:26px}
 .pcol::before{content:"";position:absolute;inset:-40px -60px;border-radius:60px;background:radial-gradient(circle at 50% 42%,rgba(143,107,255,.35),transparent 66%);filter:blur(24px);animation:breath 4.6s ease-in-out infinite;z-index:-1}
 @keyframes breath{0%,100%{opacity:.55;transform:scale(.98)}50%{opacity:1;transform:scale(1.02)}}
-.frame .tag{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--brand2);padding:6px 16px;border-radius:20px;white-space:nowrap;box-shadow:0 8px 24px -8px rgba(0,0,0,.7)}
-.chip{position:absolute;width:46px;height:46px;border-radius:12px;box-shadow:0 10px 26px -8px rgba(0,0,0,.8),0 0 0 1px rgba(190,160,255,.5)}
-.chip img{width:100%;height:100%;border-radius:12px;display:block}
+.frame .tag{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(20,13,40,.86);backdrop-filter:blur(6px);border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--brand2);padding:6px 16px;border-radius:20px;white-space:nowrap;box-shadow:0 8px 24px -8px rgba(0,0,0,.7)}
+.chip{position:absolute;width:46px;height:46px;border-radius:50%;box-shadow:0 10px 26px -8px rgba(0,0,0,.8),0 0 0 1px rgba(190,160,255,.5)}
+.chip img{width:100%;height:100%;border-radius:50%;display:block}
 .chip.c1{top:6%;left:-34px;animation:floaty 5.2s ease-in-out infinite}
 .chip.c2{top:38%;right:-40px;animation:floaty 6.4s .8s ease-in-out infinite}
 .chip.c3{bottom:16%;left:-44px;animation:floaty 7.1s 1.6s ease-in-out infinite}
 @keyframes floaty{0%,100%{transform:translateY(-7px) rotate(-3deg)}50%{transform:translateY(9px) rotate(3deg)}}
+
+/* platform card */
+.plat{display:grid;grid-template-columns:1fr .95fr;gap:40px;align-items:center;background:linear-gradient(180deg,var(--panel),#130d29);border:1px solid var(--line);border-radius:24px;padding:44px;overflow:hidden;position:relative}
+.plat::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 80% 50%,rgba(143,107,255,.2),transparent 65%);pointer-events:none}
+.plat .pimg{border-radius:18px;width:100%;display:block;border:1px solid rgba(143,107,255,.3);box-shadow:0 30px 70px -20px rgba(0,0,0,.85)}
+.plat .ptitle{font-size:28px;font-weight:900;margin:10px 0 12px}
+.plat p{color:var(--dim);font-size:15px;line-height:1.7;margin-bottom:22px;max-width:420px}
 
 .kicker{display:inline-flex;gap:8px;align-items:center;background:rgba(143,107,255,.12);border:1px solid rgba(143,107,255,.4);color:#cabfff;font-size:12.5px;font-weight:800;letter-spacing:1.6px;padding:7px 15px;border-radius:20px;text-transform:uppercase}
 h1{font-size:clamp(42px,6vw,66px);line-height:1.04;margin:22px 0 16px;font-weight:900;letter-spacing:-1.2px;background:linear-gradient(110deg,#fff 30%,#cdbfff 55%,#8f6bff 85%);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -81,8 +88,10 @@ h2{font-size:clamp(30px,4vw,42px);font-weight:900;letter-spacing:-.8px;margin-bo
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .card{background:linear-gradient(180deg,var(--panel),#150f2b);border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:transform .2s,border-color .25s,box-shadow .3s;position:relative;overflow:hidden}
 .card:hover{transform:translateY(-6px);border-color:var(--brand);box-shadow:0 22px 44px -18px rgba(143,107,255,.4)}
-.card::after{content:"";position:absolute;right:-14px;bottom:-14px;width:74px;height:74px;background:url('art-chip.png') center/contain no-repeat;opacity:.28;filter:grayscale(35%) brightness(1.5);transition:opacity .3s}
-.card:hover::after{opacity:.6}
+.card::after{content:"";position:absolute;right:-14px;bottom:-14px;width:74px;height:74px;background:url('art/hero-mini.webp') center/contain no-repeat;opacity:.24;filter:brightness(1.3);transition:opacity .3s;border-radius:50%}
+.card:hover::after{opacity:.55}
+.fimg{width:100%;border-radius:12px;display:block;margin-bottom:18px;border:1px solid rgba(143,107,255,.3);box-shadow:0 16px 38px -14px rgba(0,0,0,.85);transition:transform .35s,box-shadow .35s}
+.card:hover .fimg{transform:scale(1.02);box-shadow:0 22px 50px -14px rgba(143,107,255,.5)}
 .card .ic{font-size:26px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;background:rgba(143,107,255,.12);border:1px solid rgba(143,107,255,.35);border-radius:14px;margin-bottom:16px}
 .card h3{font-size:17px;margin-bottom:9px}
 .card p{color:var(--dim);font-size:14px;line-height:1.65}
@@ -131,7 +140,7 @@ h2{font-size:clamp(30px,4vw,42px);font-weight:900;letter-spacing:-.8px;margin-bo
 /* faq */
 .faq details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-bottom:12px}
 .faq summary{cursor:pointer;font-weight:700;font-size:15.5px;list-style:none;display:flex;justify-content:space-between;align-items:center}
-.faq summary::before{content:"";width:20px;height:20px;background:url('art-chip.png') center/contain no-repeat;margin-right:12px;filter:grayscale(20%)}
+.faq summary::before{content:"";width:20px;height:20px;background:url('art/hero-mini.webp') center/contain no-repeat;margin-right:12px;border-radius:50%}
 .faq summary span{flex:1}
 .faq summary::after{content:"+";color:var(--brand);font-size:20px;font-weight:900;transition:transform .2s}
 .faq details[open] summary::after{transform:rotate(45deg)}
@@ -139,8 +148,8 @@ h2{font-size:clamp(30px,4vw,42px);font-weight:900;letter-spacing:-.8px;margin-bo
 
 /* final cta */
 .final{text-align:center;background:radial-gradient(700px 320px at 50% 100%,rgba(143,107,255,.22),transparent 65%)}
-.final .halo{width:210px;margin:0 auto 26px;animation:slowspin 26s linear infinite}
-.final .halo img{width:100%;display:block;filter:drop-shadow(0 20px 44px rgba(143,107,255,.45))}
+.final .halo{width:220px;margin:0 auto 26px;animation:floaty 7s ease-in-out infinite}
+.final .halo img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;display:block;filter:drop-shadow(0 20px 44px rgba(143,107,255,.45));border:2px solid rgba(143,107,255,.45)}
 @keyframes slowspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .final h2{font-size:clamp(34px,5vw,54px)}
 .final .ctas{justify-content:center;margin-top:8px}
@@ -154,12 +163,13 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
 .risein.vis{opacity:1;transform:none}
 @media(max-width:900px){
   header .wrap{grid-template-columns:1fr}
+  .plat{grid-template-columns:1fr;padding:28px}
   .grid{grid-template-columns:1fr 1fr}
   .steps,.gallery{grid-template-columns:1fr}
   nav ul li:nth-child(-n+3){display:none}
   .pcol{margin-top:10px}
 }
-@media(max-width:600px){.grid{grid-template-columns:1fr}}
+@media(max-width:600px){.grid{grid-template-columns:1fr!important}}
 </style>
 </head>
 <body>
@@ -197,29 +207,46 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
 
     <div class="pcol">
       <div class="frame">
-        <img src="art-portrait.png" alt="The blindfolded statue — ApolloCut, edition MMXXVI">
+        <img src="art/hero.webp" alt="The blindfolded marble bust of Apollo — ApolloCut's guardian, lit in violet">
         <span class="tag">⚖ the statue of free editing</span>
       </div>
-      <span class="chip c1"><img src="art-chip.png" alt=""></span>
-      <span class="chip c2"><img src="art-chip.png" alt=""></span>
-      <span class="chip c3"><img src="art-chip.png" alt=""></span>
+      <span class="chip c1"><img src="art/hero-mini.webp" alt=""></span>
+      <span class="chip c2"><img src="art/hero-mini.webp" alt=""></span>
+      <span class="chip c3"><img src="art/hero-mini.webp" alt=""></span>
     </div>
   </div>
 </header>
 
 <div class="strip"><div class="track">
-  <span><img src="art-chip.png" alt="">non-linear multi-track editing</span><span><img src="art-chip.png" alt="">keyframed effects · bezier easing</span><span><img src="art-chip.png" alt="">h.264 · hevc · prores · webm</span><span><img src="art-chip.png" alt="">100% local — media never leaves your machine</span><span><img src="art-chip.png" alt="">no subscription · no telemetry</span><span><img src="art-chip.png" alt="">MIT licensed, free forever</span>
-  <span><img src="art-chip.png" alt="">non-linear multi-track editing</span><span><img src="art-chip.png" alt="">keyframed effects · bezier easing</span><span><img src="art-chip.png" alt="">h.264 · hevc · prores · webm</span><span><img src="art-chip.png" alt="">100% local — media never leaves your machine</span><span><img src="art-chip.png" alt="">no subscription · no telemetry</span><span><img src="art-chip.png" alt="">MIT licensed, free forever</span>
+  <span><img src="art/hero-mini.webp" alt="">non-linear multi-track editing</span><span><img src="art/hero-mini.webp" alt="">keyframed effects · bezier easing</span><span><img src="art/hero-mini.webp" alt="">h.264 · hevc · prores · webm</span><span><img src="art/hero-mini.webp" alt="">100% local — media never leaves your machine</span><span><img src="art/hero-mini.webp" alt="">no subscription · no telemetry</span><span><img src="art/hero-mini.webp" alt="">MIT licensed, free forever</span>
+  <span><img src="art/hero-mini.webp" alt="">non-linear multi-track editing</span><span><img src="art/hero-mini.webp" alt="">keyframed effects · bezier easing</span><span><img src="art/hero-mini.webp" alt="">h.264 · hevc · prores · webm</span><span><img src="art/hero-mini.webp" alt="">100% local — media never leaves your machine</span><span><img src="art/hero-mini.webp" alt="">no subscription · no telemetry</span><span><img src="art/hero-mini.webp" alt="">MIT licensed, free forever</span>
 </div></div>
+
+<section style="padding-top:70px"><div class="wrap">
+  <div class="plat risein">
+    <div style="position:relative">
+      <span class="kicker">Desktop App</span>
+      <div class="ptitle">Windows 10 / 11</div>
+      <p>One 99 MB installer — Electron runtime, FFmpeg render engine and the whole studio bundled. NSIS install wizard with Start Menu &amp; Desktop shortcuts. The statue guards every pixel, locally.</p>
+      <div class="ctas">
+        <a class="btn hot big" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇&nbsp; Download desktop app</a>
+      </div>
+      <p class="meta" style="margin-top:16px">macOS &amp; Linux: run from source — <code style="background:#0d0920;border:1px solid var(--line);padding:2px 7px;border-radius:6px;color:#d8caff">npm start</code></p>
+    </div>
+    <img class="pimg" src="art/platform.webp" alt="The Apollo bust standing before four glowing window panes — desktop spirit">
+  </div>
+</div></section>
 
 <section id="features"><div class="wrap">
   <h2 class="risein">Premiere-grade. <i>Zero price.</i></h2>
   <p class="sub risein">Every tool here runs on your machine. Import, cut, grade, mix, export — the whole professional loop, with the keyboard workflow editors already have in their hands.</p>
-  <div class="grid">
-    <div class="card risein"><div class="ic">🎬</div><h3>Non-linear timeline</h3><p>Multi-track video &amp; audio, blade, ripple-delete, detach audio, nested sequences, snapping, markers — the editing grammar professionals speak.</p></div>
-    <div class="card risein"><div class="ic">📈</div><h3>Keyframed effects</h3><p>Bezier easing on every property. Adjustment layers grade whole stacks. Chroma key, blur, noise, sharpen, saturation, color wheels, crop &amp; transform.</p></div>
-    <div class="card risein"><div class="ic">🎚️</div><h3>Audio, mixed properly</h3><p>Per-clip gain, fades with curve handles, solo/mute per track, master live meters. The sound of your cut is not an afterthought.</p></div>
-    <div class="card risein"><div class="ic">⚙️</div><h3>FFmpeg render engine</h3><p>Bundled pro export — H.264, HEVC, ProRes, WebM, plus WAV/MP3/GIF. Hardware-aware fallback chain means you always get a file out.</p></div>
+  <div class="grid" style="grid-template-columns:repeat(2,1fr)">
+    <div class="card risein"><img class="fimg" src="art/feature-timeline.webp" alt="The bust ringed by holographic timeline tracks"><h3>Non-linear timeline</h3><p>Multi-track video &amp; audio, blade, ripple-delete, detach audio, nested sequences, snapping, markers — the editing grammar professionals speak, guarded by the ghost of Olympus.</p></div>
+    <div class="card risein"><img class="fimg" src="art/feature-effects.webp" alt="The bust orbited by bezier curves and keyframe handles"><h3>Keyframed effects</h3><p>Bezier easing on every property. Adjustment layers grade whole stacks. Chroma key, blur, noise, sharpen, saturation, color wheels, crop &amp; transform.</p></div>
+    <div class="card risein"><img class="fimg" src="art/feature-audio.webp" alt="The bust crowned by a waveform laurel"><h3>Audio, mixed properly</h3><p>Per-clip gain, fades with curve handles, solo/mute per track, master live meters. The sound of your cut is not an afterthought.</p></div>
+    <div class="card risein"><img class="fimg" src="art/feature-export.webp" alt="The bust spiralled by a film-strip ribbon of codecs"><h3>FFmpeg render engine</h3><p>Bundled pro export — H.264, HEVC, ProRes, WebM, plus WAV/MP3/GIF. Hardware-aware fallback chain means you always get a file out.</p></div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:20px">
     <div class="card risein"><div class="ic">⚡</div><h3>GPU-accelerated preview</h3><p>WebGL compositor with automatic CPU fallback. Scrub and play your graded timeline in real time on ordinary hardware.</p></div>
     <div class="card risein"><div class="ic">🧠</div><h3>Optional local AI tools</h3><p>Whisper transcription and whisper-cut — entirely offline when you drop a model in. AI ambitions, zero spying.</p></div>
   </div>
@@ -230,17 +257,17 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
   <p class="sub risein">One statue, three commandments. This is the face you'll find on the app icon, the installer, this page — and nowhere near a paywall.</p>
   <div class="gallery">
     <div class="fel risein">
-      <img src="art-portrait.png" alt="ApolloCut — the museum portrait">
+      <img src="art/hero.webp" alt="ApolloCut — the guardian bust">
       <div class="cap">FREE</div>
       <div class="cap2">no subscription · no watermark · no trial timer</div>
     </div>
     <div class="fel risein">
-      <img src="art-duotone.png" alt="ApolloCut — the duotone print" style="transition:transform .4s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform=''">
+      <img src="art/feature-timeline.webp" alt="ApolloCut — the timeline halo" style="transition:transform .4s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform=''">
       <div class="cap">OPEN</div>
       <div class="cap2">MIT source, fork it, remix it, ship it</div>
     </div>
-    <div class="fel risein" style="display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 50% 40%,#241945,#140d28 80%)">
-      <img src="art-halo.png" alt="ApolloCut — the halo medal" style="box-shadow:none;border-radius:0;width:78%;margin:0 auto;animation:slowspin 30s linear infinite">
+    <div class="fel risein">
+      <img src="art/feature-export.webp" alt="ApolloCut — your media, your machine">
       <div class="cap">YOURS</div>
       <div class="cap2">100% local — media never leaves your disk</div>
     </div>
@@ -257,7 +284,7 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
     </div>
     <div class="body">
       <div class="preview">
-        <img src="art-chip.png" alt="">
+        <img src="art/hero-mini.webp" alt="">
         <span class="tc" id="tc">00:00:00:00</span>
         <span class="gpu">GPU ✓</span>
       </div>
@@ -291,9 +318,9 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
   <h2 class="risein">From zero to a clean cut in minutes.</h2>
   <p class="sub risein">No tutorials required, no signup wall. Three steps and you're editing.</p>
   <div class="steps">
-    <div class="step risein"><span class="thumb"><img src="art-chip.png" alt=""></span><h3>Download the installer</h3><p>One 99 MB file from <a href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">Releases</a>. Everything's inside — Electron runtime, FFmpeg engine, the app.</p></div>
-    <div class="step risein"><span class="thumb"><img src="art-chip.png" alt=""></span><h3>Run it</h3><p>Windows may show SmartScreen (we're a new open project, not yet signed) — click <code>More info → Run anyway</code>. Pick a folder, done. Start Menu + Desktop shortcuts included.</p></div>
-    <div class="step risein"><span class="thumb"><img src="art-chip.png" alt=""></span><h3>Cut &amp; export</h3><p>Drop media onto the timeline, <code>Ctrl+K</code> to blade, keyframe a zoom, then <code>Ctrl+Shift+E</code> for Pro Export. Mp4 out, straight to your disk.</p></div>
+    <div class="step risein"><span class="thumb"><img src="art/hero-mini.webp" alt=""></span><h3>Download the installer</h3><p>One 99 MB file from <a href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">Releases</a>. Everything's inside — Electron runtime, FFmpeg engine, the app.</p></div>
+    <div class="step risein"><span class="thumb"><img src="art/hero-mini.webp" alt=""></span><h3>Run it</h3><p>Windows may show SmartScreen (we're a new open project, not yet signed) — click <code>More info → Run anyway</code>. Pick a folder, done. Start Menu + Desktop shortcuts included.</p></div>
+    <div class="step risein"><span class="thumb"><img src="art/hero-mini.webp" alt=""></span><h3>Cut &amp; export</h3><p>Drop media onto the timeline, <code>Ctrl+K</code> to blade, keyframe a zoom, then <code>Ctrl+Shift+E</code> for Pro Export. Mp4 out, straight to your disk.</p></div>
   </div>
 </div></section>
 
@@ -307,7 +334,7 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
 </div></section>
 
 <section class="final" style="padding-top:0"><div class="wrap risein">
-  <div class="halo"><img src="art-halo.png" alt="The ApolloCut halo medal — statute of free editing"></div>
+  <div class="halo"><img src="art/hero.webp" alt="The ApolloCut guardian — the statue of free editing"></div>
   <h2>The blindfold stays on. The editor stays free.</h2>
   <p class="sub" style="margin:14px auto 34px">Join the first generation of ApolloCut editors.</p>
   <div class="ctas">
