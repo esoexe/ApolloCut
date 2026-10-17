@@ -8,6 +8,10 @@
 </p>
 
 <p align="center">
+  <img src="docs/promo-embed.gif" width="560" alt="ApolloCut in 12 seconds — the statue, the timeline, the export">
+</p>
+
+<p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge"></a>
   <img alt="Platform" src="https://img.shields.io/badge/Platform-Windows-blue?style=for-the-badge">
   <img alt="Version" src="https://img.shields.io/badge/Version-1.3.3-blueviolet?style=for-the-badge">
@@ -62,6 +66,26 @@ The blindfold in our icon isn't decoration. Editing tools shouldn't play favorit
 </tr>
 </table>
 
+
+## ♟ How it compares
+
+| | Premiere Pro | ApolloCut | CapCut | Shotcut |
+|---|---|---|---|---|
+| **Price** | $22.99+/mo subscription | **free forever (MIT)** | free* (freemium tiers) | free (GPL) |
+| **Account required** | yes | **no** | yes | no |
+| **Telemetry / cloud calls** | heavy | **none — 100% local** | yes | none |
+| **Watermark** | — | **never** | on some exports | never |
+| **Multi-track NLE** | ✔ | ✔ | ✔ | ✔ |
+| **Keyframed effects (bezier)** | ✔ | ✔ | partial | partial |
+| **Nested sequences** | ✔ | ✔ | ✘ | ✘ |
+| **Adjustment layers** | ✔ | ✔ | ✘ | ✘ |
+| **Pro render engine (H.264/HEVC/ProRes)** | ✔ | ✔ bundled FFmpeg | partial (HEVC extra) | ✔ FFmpeg |
+| **Headless CI render API** | ✘ | ✔ `hf-run-apollocut.js` | ✘ | partial (melt) |
+| **Source code you can ship products with** | ✘ | ✔ MIT | ✘ | ✔ GPL (linked limits) |
+| **Battle-tested for 15 yrs** | ✔ | ✘ (young & open) | partial | ✔ |
+
+*Row for row, ApolloCut trades polish-years for freedom, privacy and price. That's the deal on the tin.*
+
 ## 📦 Download
 
 Grab the Windows installer (99 MB, everything bundled — no dependencies needed):
@@ -112,6 +136,10 @@ node hf-run-apollocut.js project.apollocut.json --nodes 1
 ## 🤝 Contributing
 
 Yes please. See [CONTRIBUTING.md](CONTRIBUTING.md) — bug reports, feature ideas and pull requests are all welcome.
+
+## ⭐ Star history
+
+[![Star History Chart](https://api.star-history.com/svg?repos=esoexe/ApolloCut&type=Date)](https://star-history.com/#esoexe/ApolloCut&Date)
 
 ## License
 
