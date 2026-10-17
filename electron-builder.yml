@@ -1,0 +1,56 @@
+appId: com.apollocut.app
+productName: ApolloCut
+copyright: MIT © 2026 ApolloCut contributors
+
+directories:
+  output: release
+  buildResources: assets-src
+
+files:
+  - main/**
+  - renderer/**
+  - package.json
+  - node_modules/**
+  - "!**/*.map"
+
+asar: true
+asarUnpack:
+  - node_modules/ffmpeg-static/**
+
+# A single high-res build/icon.png (512x512) is used for every platform —
+# electron-builder generates .ico (Windows) and .icns (macOS) from it at build time.
+
+linux:
+  target:
+    - AppImage
+    - deb
+  category: AudioVideo
+  artifactName: ${productName}-${version}-${arch}.${ext}
+  synopsis: Free & open-source non-linear video editor
+  description: >-
+    ApolloCut is a free, open-source desktop video editor with multi-track
+    timelines, keyframed effects, audio mixing and FFmpeg-powered export.
+
+win:
+  icon: assets-src/icon.ico
+  target:
+    - nsis
+  artifactName: ${productName}-Setup-${version}-${arch}.${ext}
+
+nsis:
+  installerIcon: assets-src/icon.ico
+  uninstallerIcon: assets-src/icon.ico
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: ApolloCut
+
+mac:
+  target:
+    - dmg
+    - zip
+  category: public.app-category.video
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+npmRebuild: false

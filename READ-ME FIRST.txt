@@ -1,0 +1,22 @@
+APOLLOCUT 1.3.1 — PORTABLE WINDOWS EDITION (offline builder bundle)
+===================================================================
+
+1) RUN NOW — double-click  START APOLLOCUT.bat
+   (Electron + FFmpeg engine bundled, nothing to install)
+
+2) BUILD THE INSTALLER (no downloads, works without admin)
+   You need Node.js (nodejs.org), then double-click
+   "BUILD WINDOWS INSTALLER.bat" and in ~2-3 minutes
+   ApolloCut-1.3.1-Setup.exe appears in the release\ folder.
+
+   How this works offline: builder-cache\ seeds your local
+   electron + electron-builder caches (NSIS 3.0.4.1,
+   nsis-resources 3.4.1, winCodeSign 2.6.0, Electron 33.4.11)
+   BEFORE building — so GitHub downloads and the
+   "symbolic link privilege" error can't happen.
+
+3) SmartScreen warning on first launch is normal for an
+   unsigned open-source app: "More info" -> "Run anyway".
+
+4) Full manual in README.md — scopes, proxies, GPU engine,
+   AI tools, multicam, EDL interchange, CLI rendering, plugins.

@@ -1,0 +1,24 @@
+# dependencies & build output
+node_modules/
+release/
+dist/
+out/
+
+# local build caches (offline installer-building kit)
+builder-cache/
+
+# os noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# logs & temp
+*.log
+*.tmp
+*.part
+*.zip
+*.7z
+
+# editor
+.vscode/
+.idea/

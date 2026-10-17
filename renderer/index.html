@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ApolloCut — Free &amp; Open Source Desktop Video Editor</title>
+<link rel="icon" href="assets/icon.png" type="image/png">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="app">
+
+  <header id="menubar">
+    <div id="logo">
+      <img src="assets/icon-64.png" width="26" height="26" alt="Apollo" style="border-radius:6px;box-shadow:0 0 10px rgba(143,107,255,.5)">
+      <span class="logo-name">Apollo<b>Cut</b></span>
+    </div>
+    <nav id="menus"></nav>
+    <div class="mb-spacer"></div>
+    <span id="save-ind" title="Autosave"></span>
+    <input id="project-name" spellcheck="false" value="Untitled Project" title="Project name">
+  </header>
+
+  <div id="main">
+    <div id="workspace">
+
+      <section id="panel-left" class="panel">
+        <div class="tabs">
+          <button class="tab active" data-tab="pool">Project</button>
+          <button class="tab" data-tab="fxlib">Effects</button>
+          <button class="tab" data-tab="scopes">Scopes</button>
+          <button class="tab" data-tab="plugins">Plugins</button>
+          <button class="tab" data-tab="history">History</button>
+        </div>
+        <div id="tab-pool" class="tabpane">
+          <div class="pool-toolbar">
+            <button id="btn-import" class="btn accent">+ Import</button>
+            <input id="pool-search" placeholder="Search media…" spellcheck="false">
+          </div>
+          <div id="media-pool"></div>
+          <div id="pool-empty">
+            <p>Drop video, audio or images anywhere to import.</p>
+            <p class="dim">or</p>
+            <button id="btn-demo" class="btn">⚡ Load demo media</button>
+          </div>
+        </div>
+        <div id="tab-fxlib" class="tabpane hidden"><div id="presets"></div></div>
+        <div id="tab-scopes" class="tabpane hidden">
+          <div id="scopes-btns">
+            <button class="scope-btn active" data-mode="waveform">Waveform</button>
+            <button class="scope-btn" data-mode="parade">Parade</button>
+            <button class="scope-btn" data-mode="vectorscope">Vector</button>
+            <button class="scope-btn" data-mode="histogram">Histo</button>
+          </div>
+          <canvas id="scopes-canvas" width="460" height="260" style="width:100%;display:block;background:#0a0a10"></canvas>
+          <div class="fx-note" style="padding:6px 10px">Live analysis of the program monitor (luma / RGB walk / chroma).</div>
+        </div>
+        <div id="tab-plugins" class="tabpane hidden">
+          <div style="display:flex;gap:6px;padding:8px;border-bottom:1px solid var(--border)">
+            <button id="plugins-reload" class="btn">↻ Reload</button>
+            <button id="plugins-folder" class="btn">Folder…</button>
+          </div>
+          <div id="plugins-list" style="flex:1;overflow-y:auto;padding:4px 0"></div>
+        </div>
+        <div id="tab-history" class="tabpane hidden"><div id="history-list"></div></div>
+      </section>
+
+      <div class="splitv" id="split-1"></div>
+
+      <section id="panel-center" class="panel">
+        <div class="panel-title"><span class="dot rec"></span>Program<span id="program-res"></span><span class="sp"></span><button id="pgm-gl" class="proxy-toggle hidden" title="GPU engine (WebGL2 compositor — GPU shader pipeline: mattes, 3D LUT, blur, nested seqs)">GPU</button><button id="pgm-proxy" class="proxy-toggle hidden" title="Proxy mode: 540p preview for butter-smooth 4K editing">PX</button><span id="fps-ind"></span></div>
+        <div id="program-wrap"><canvas id="program-display"></canvas></div>
+        <div id="mc-strip" class="hidden"></div>
+        <div id="transport">
+          <button id="btn-goto-start" title="Go to start (Home)">⏮</button>
+          <button id="btn-prev-frame" title="Previous frame (←)">⏴</button>
+          <button id="btn-play" class="big" title="Play/Pause (Space)">▶</button>
+          <button id="btn-next-frame" title="Next frame (→)">⏵</button>
+          <button id="btn-goto-end" title="Go to end (End)">⏭</button>
+          <button id="btn-loop" title="Loop In→Out">🔁</button>
+          <button id="btn-safe" title="Safe margins">▦</button>
+          <input id="tc-display" value="00:00:00:00" spellcheck="false" title="Current timecode">
+          <span id="tc-dur" class="dim">/ 00:00:00:00</span>
+          <span class="tspacer"></span>
+          <button id="btn-in" title="Mark In (I)">⇤</button>
+          <button id="btn-out" title="Mark Out (O)">⇥</button>
+          <label class="volwrap" title="Master volume">🔊<input type="range" id="master-vol" min="0" max="200" value="100"></label>
+          <button id="btn-export" class="accent" title="Export (Ctrl+E)">Export ⏏</button>
+        </div>
+      </section>
+
+      <div class="splitv" id="split-2"></div>
+
+      <section id="panel-right" class="panel">
+        <div class="panel-title">Effect Controls</div>
+        <div id="fx-head">
+          <div id="fx-clipname">No clip selected</div>
+          <div id="fx-sub" class="dim"></div>
+        </div>
+        <div id="fx-panel"><div class="fx-empty">Select a clip on the timeline to edit its properties.</div></div>
+      </section>
+
+    </div>
+
+    <div class="splith" id="split-main"></div>
+
+    <section id="timeline" class="panel">
+      <div id="tl-toolbar">
+        <button id="tool-select" class="tbtn active" title="Selection tool (V)">➤</button>
+        <button id="tool-razor" class="tbtn" title="Razor tool (C)">✂</button>
+        <span class="sep"></span>
+        <button id="btn-snap" class="tbtn active" title="Snapping (S)">🧲</button>
+        <button id="btn-cut" class="tbtn" title="Split at playhead (Ctrl+K)">✂|</button>
+        <button id="btn-marker" class="tbtn" title="Add marker (M)">◆</button>
+        <button id="btn-add-text" class="tbtn" title="New text title (T)">🅣</button>
+        <span class="sep"></span>
+        <button id="btn-undo" class="tbtn" title="Undo (Ctrl+Z)">↶</button>
+        <button id="btn-redo" class="tbtn" title="Redo (Ctrl+Y)">↷</button>
+        <span class="tspacer"></span>
+        <span class="dim lbl">Zoom</span>
+        <button id="zoom-out" class="tbtn">−</button>
+        <input id="zoom-slider" type="range" min="8" max="420" value="56">
+        <button id="zoom-in" class="tbtn">+</button>
+        <button id="zoom-fit" class="tbtn" title="Zoom to fit (\)">⛶</button>
+      </div>
+      <div id="tl-wrap">
+        <div id="tl-headers">
+          <div class="tl-corner"><span>Tracks</span></div>
+          <div id="tl-headers-inner"></div>
+        </div>
+        <div id="tl-right">
+          <div id="tl-inner">
+            <canvas id="tl-ruler"></canvas>
+            <div id="tl-lanes"></div>
+            <div id="tl-playhead"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer id="statusbar">
+    <span id="status-msg">Ready</span>
+    <span id="status-right" class="dim">ApolloCut · MIT License · 100% free &amp; open source desktop editor</span>
+  </footer>
+</div>
+
+<div id="drop-overlay"><div class="drop-box">⬇<br>Drop media to import</div></div>
+<div id="modal-root"></div>
+<div id="ctx-root"></div>
+<div id="toast-root"></div>
+<input id="file-input" type="file" multiple hidden
+  accept="video/*,audio/*,image/*,.mkv,.mov,.avi,.webm,.mp4,.m4v,.mp3,.wav,.ogg,.oga,.m4a,.flac,.aac">
+<input id="project-input" type="file" hidden accept=".json,.apollocut,application/json">
+
+<script src="js/util.js"></script>
+<script src="js/state.js"></script>
+<script src="js/media.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/effects.js"></script>
+<script src="js/exporter.js"></script>
+<script src="js/exporter-pro.js"></script>
+<script src="js/scopes.js"></script>
+<script src="js/lut.js"></script>
+<script src="js/proxy.js"></script>
+<script src="js/captions.js"></script>
+<script src="js/ai-tools.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/graph.js"></script>
+<script src="js/gl.js"></script>
+<script src="js/analyze.js"></script>
+<script src="js/subject.js"></script>
+<script src="js/nested.js"></script>
+<script src="js/multicam.js"></script>
+<script src="js/reframe.js"></script>
+<script src="js/track.js"></script>
+<script src="js/edl.js"></script>
+<script src="js/diagnostics.js"></script>
+<script src="js/app.js"></script>
+<script src="js/desktop.js"></script>
+</body>
+</html>
