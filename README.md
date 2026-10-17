@@ -11,6 +11,7 @@
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge"></a>
   <img alt="Platform" src="https://img.shields.io/badge/Platform-Windows-blue?style=for-the-badge">
   <img alt="Version" src="https://img.shields.io/badge/Version-1.3.3-blueviolet?style=for-the-badge">
+  <a href="https://esoexe.github.io/ApolloCut/"><img alt="Website" src="https://img.shields.io/badge/Website-esoexe.github.io%2FApolloCut-41c7ff?style=for-the-badge"></a>
   <img alt="Built with" src="https://img.shields.io/badge/Built%20with-Electron%20%2B%20FFmpeg-8f6bff?style=for-the-badge">
 </p>
 
