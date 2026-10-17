@@ -75,7 +75,7 @@ While the very first CI release spins up, current binaries:
 ## 🔨 Build from source
 
 ```bash
-git clone https://github.com/<you>/ApolloCut.git
+git clone https://github.com/esoexe/ApolloCut.git
 cd ApolloCut
 npm install
 npm start            # runs the app in dev mode
