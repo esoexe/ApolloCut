@@ -161,15 +161,85 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
 
 .risein{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
 .risein.vis{opacity:1;transform:none}
+/* ---------- responsive nav ---------- */
+.burger{display:none;width:46px;height:46px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;margin-left:auto}
+.burger span{display:block;width:20px;height:2px;background:var(--txt);border-radius:2px;transition:transform .25s,opacity .2s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobilemenu{display:none;position:fixed;top:64px;left:0;right:0;z-index:49;background:rgba(11,8,23,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:14px 22px calc(20px + env(safe-area-inset-bottom));flex-direction:column;gap:4px}
+.mobilemenu.open{display:flex}
+.mobilemenu a{color:var(--txt);font-weight:700;font-size:16.5px;padding:13px 10px;border-radius:10px;display:block}
+.mobilemenu a:hover{background:var(--panel)}
+.mobilemenu .btn{justify-content:center;margin-top:10px;padding:14px;font-size:15px}
+
+@media(max-width:1024px){
+  .grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr}
+  .wrap{padding:0 26px}
+}
 @media(max-width:900px){
-  header .wrap{grid-template-columns:1fr}
-  .plat{grid-template-columns:1fr;padding:28px}
+  header .wrap{grid-template-columns:1fr;gap:48px}
+  .plat{grid-template-columns:1fr;padding:30px}
   .grid{grid-template-columns:1fr 1fr}
   .steps,.gallery{grid-template-columns:1fr}
-  nav ul li:nth-child(-n+3){display:none}
-  .pcol{margin-top:10px}
+  nav ul{display:none}
+  .burger{display:flex}
+  .pcol{margin-top:6px}
+  section{padding:64px 0}
+  header{padding:118px 0 30px}
 }
-@media(max-width:600px){.grid{grid-template-columns:1fr!important}}
+@media(max-width:700px){
+  .grid[style*="repeat(2,1fr)"]{grid-template-columns:1fr!important}
+  .grid[style*="1fr 1fr"]{grid-template-columns:1fr!important}
+  .editor .tl{padding:9px}
+  .chip{width:38px;height:38px}
+  .frame img{width:min(340px,84vw)}
+  .ctas .big{font-size:15px;padding:13px 18px}
+  .final .halo{width:170px}
+}
+@media(max-width:560px){
+  .wrap{padding:0 18px}
+  nav .wrap{padding:0 14px}
+  h1{font-size:clamp(36px,11vw,46px)}
+  h2{font-size:clamp(27px,8vw,32px)}
+  .lede{font-size:16px}
+  .sub{font-size:15px}
+  .btn{padding:10px 14px;font-size:13.5px;min-height:44px}
+  .ctas{flex-direction:column;align-items:stretch}
+  .cta-done.row{flex-direction:row}
+  .strip .track{font-size:11px;letter-spacing:1.2px;gap:26px}
+  .card{padding:20px}
+  .step{padding:22px 20px}
+  .final .halo{width:150px}
+  .editor .bar{height:32px}
+  .editor .fname{font-size:10px}
+  .editor .preview img{width:100px}
+  .plat{padding:22px}
+  section{padding:52px 0}
+  footer .wrap{flex-direction:column;align-items:flex-start;gap:12px}
+  footer .fl{margin-left:0;flex-wrap:wrap;gap:16px}
+  .pcol{margin-bottom:8px}
+}
+@media(max-width:400px){
+  nav .nm{font-size:16.5px}
+  h1{font-size:34px}
+  .frame .tag{font-size:11px;padding:5px 12px}
+  .chip.c2{display:none}
+}
+/* hard overflow guards + ios polish */
+html,body{max-width:100%;overflow-x:hidden}
+img{max-width:100%;height:auto}
+body{-webkit-text-size-adjust:100%}
+nav .wrap,footer .wrap{padding-left:max(28px,env(safe-area-inset-left));padding-right:max(28px,env(safe-area-inset-right))}
+@media(max-width:560px){nav .wrap,footer .wrap{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}}
+@media (hover:none) and (pointer:coarse){
+  .card:active,.btn:active,.fel:active{transform:scale(.985);border-color:var(--brand)}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001s!important;transition-duration:.001s!important}
+  html{scroll-behavior:auto}
+}
 </style>
 </head>
 <body>
@@ -185,7 +255,16 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
     <li><a class="btn" href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">★ GitHub</a></li>
     <li><a class="btn hot" href="#download">⬇ Download</a></li>
   </ul>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </div></nav>
+<div class="mobilemenu" id="mobilemenu">
+  <a href="#features">Features</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#how">Get started</a>
+  <a href="#faq">FAQ</a>
+  <a class="btn hot" href="#download">⬇ Download ApolloCut</a>
+  <a class="btn" href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">★ View on GitHub</a>
+</div>
 
 <header>
   <span class="pt" style="left:12%;animation-delay:0s"></span>
@@ -356,6 +435,18 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
 </div></footer>
 
 <script>
+// mobile hamburger
+const burger = document.getElementById('burger');
+const mm = document.getElementById('mobilemenu');
+burger.addEventListener('click', () => {
+  const open = mm.classList.toggle('open');
+  burger.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open);
+});
+mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mm.classList.remove('open'); burger.classList.remove('open'); burger.setAttribute('aria-expanded', 'false');
+}));
+
 fetch('https://api.github.com/repos/esoexe/ApolloCut/releases/latest')
   .then(r => r.ok ? r.json() : null)
   .then(d => {
