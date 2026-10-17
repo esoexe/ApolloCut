@@ -5,7 +5,10 @@
   "description": "ApolloCut \u2014 the free & open-source desktop video editor. Non-linear editing, keyframed effects, audio mixing and a bundled FFmpeg pro render engine.",
   "main": "main/main.js",
   "license": "MIT",
-  "author": "ApolloCut contributors",
+  "author": {
+    "name": "ApolloCut Contributors",
+    "email": "apollocut-contributors@users.noreply.github.com"
+  },
   "homepage": "https://github.com/apollocut/apollocut",
   "scripts": {
     "start": "electron .",
