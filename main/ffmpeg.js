@@ -53,6 +53,7 @@ function buildArgs(opts, audioPath){
     const args = ['-y', '-i', audioPath];
     if (format === 'audio-wav') args.push('-vn', '-c:a', 'pcm_s16le');
     else args.push('-vn', '-c:a', 'libmp3lame', '-b:a', '320k');
+    if (opts.loudnorm) args.push('-af', 'loudnorm=I=-14:TP=-1.0:LRA=11');
     args.push(outPath);
     return { args, cwd: null };
   }
@@ -85,6 +86,7 @@ function buildArgs(opts, audioPath){
   }
 
   if (audioPath){
+    if (opts.loudnorm) videoArgs.push('-af', 'loudnorm=I=-14:TP=-1.0:LRA=11');
     if (format === 'mov-prores') videoArgs.push('-c:a', 'pcm_s16le');
     else if (format === 'webm-vp9') videoArgs.push('-c:a', 'libopus', '-b:a', '160k');
     else videoArgs.push('-c:a', 'aac', '-b:a', '192k');

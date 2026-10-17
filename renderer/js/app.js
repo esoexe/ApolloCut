@@ -177,7 +177,7 @@ UI.aboutDialog = () => UI.dialog({
   body: `<div class="about-ic">
       <img src="assets/icon-128.png" width="64" height="64" alt="Apollo" style="border-radius:14px">
       <div><div style="font-size:17px;font-weight:700">ApolloCut</div>
-      <div class="dim">v1.4.0 — free &amp; open-source desktop video editor</div></div>
+      <div class="dim">v1.5.0 — free &amp; open-source desktop video editor</div></div>
     </div>
     <p>The blindfolded classical head — a free, open editor made of light and sound, in the spirit of the Greek masters.</p>
     <p style="margin-top:8px">Multi-track timeline · real-time compositing · keyframed effects · audio mixing · FFmpeg render engine (MP4 / H.265 / ProRes / WebM). Everything runs locally — your media never leaves your machine.</p>
@@ -332,6 +332,7 @@ const MENUS = [
   { label: 'Help', items: [
     { label: 'Self-Test & Support Report…', action: () => window.Diagnostics && Diagnostics.run() },
     { label: 'Keyboard Shortcuts', action: () => UI.shortcutsDialog() },
+        { label: 'Check for Updates…', action: () => window.updateCheck ? updateCheck(true) : UI.toast('Offline', 'err') },
     { label: 'Welcome & Quick Start…', action: () => UI.welcomeDialog(true) },
     { label: 'About ApolloCut', action: () => UI.aboutDialog() }
   ]}
@@ -723,6 +724,37 @@ async function loadDemo(placeOnTimeline=true){
   UI.status('Ready');
 }
 
+
+/* ---------------- update checker (gitHub releases, respects offline) ---------------- */
+async function isNewerTag(cur, next){
+  const pa = String(cur).split('.').map(Number), pb = String(next).split('.').map(Number);
+  for (let i = 0; i < 3; i++){
+    const x = pb[i] || 0, y = pa[i] || 0;
+    if (x > y) return true; if (x < y) return false;
+  }
+  return false;
+}
+window.updateCheck = async (verbose) => {
+  if (!window.desktop || !desktop.isDesktop || !desktop.appVersion) { if (verbose) UI.toast('Update check needs the desktop app', 'err'); return; }
+  try{
+    const cur = await desktop.appVersion();
+    const resp = await fetch('https://api.github.com/repos/esoexe/ApolloCut/releases/latest', { headers: { 'Accept': 'application/vnd.github+json' }, cache: 'no-store' });
+    if (!resp.ok) throw new Error('http ' + resp.status);
+    const d = await resp.json();
+    const latest = String(d.tag_name || '').replace(/^v/, '');
+    if (!latest) throw new Error('no tag');
+    if (await isNewerTag(cur, latest)){
+      UI.dialog({
+        title: 'Update available',
+        body: `<p><b>ApolloCut v${latest}</b> is out (you are on v${cur}).</p>
+               <p class="dim">Download the new installer — it upgrades in place; projects and settings carry over.</p>`,
+        ok: `Download v${latest}`, cancel: 'Later',
+        onOk: () => desktop.openExternal('https://github.com/esoexe/ApolloCut/releases/latest')
+      });
+    } else if (verbose) UI.toast('ApolloCut is up to date — v' + cur, 'ok');
+  } catch(e){ if (verbose) UI.toast('Update check failed — are you offline?', 'err'); }
+};
+
 /* ================================================================
    Boot
 ================================================================ */
@@ -795,6 +827,7 @@ function boot(){
 
   setInterval(doAutosave, 30000);
   setTimeout(() => UI.welcomeDialog(false), 900);
+  setTimeout(() => { if (window.updateCheck) updateCheck(false); }, 5000);
   window.addEventListener('beforeunload', () => {
     try { doAutosave(); } catch(e){}
     // never block window close — autosave runs every 30 s and once more here

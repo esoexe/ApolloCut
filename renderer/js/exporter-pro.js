@@ -61,6 +61,7 @@ ProExport.dialog = async function(){
       </select></div>
       <div class="dlg-row"><label>Resolution</label><input value="${State.project.width}×${State.project.height} @ ${State.project.fps} fps" disabled></div>
       <div class="fx-check"><input type="checkbox" name="burn" ${caps ? '' : 'disabled'}><label>Burn in captions (${caps} cue${caps === 1 ? '' : 's'})</label></div>
+      <div class="fx-check"><input type="checkbox" name="loudnorm"><label>Normalize loudness <b>−14 LUFS</b> (YouTube/broadcast-safe loudness standard)</label></div>
       <p class="fx-note">Frame-accurate render: every frame is composited at full quality and encoded by the
       bundled FFmpeg — identical to a Premiere Pro "Render &amp; Export" (with Mercury GPU acceleration when a GPU engine is picked).
       LUTs and enabled plugins are baked in. Audio is mixed in 48 kHz stereo first.</p>`,
@@ -68,7 +69,7 @@ ProExport.dialog = async function(){
     onOk: v => {
       const fmt = FORMATS.find(f => f.id === v.format) || FORMATS[0];
       const q = QUALITIES.find(x => x.id === v.quality) || QUALITIES[1];
-      run({ fmt, q, useIO: v.range === 'io', engine: v.engine || null, burn: !!v.burn });
+      run({ fmt, q, useIO: v.range === 'io', engine: v.engine || null, burn: !!v.burn, loudnorm: !!v.loudnorm });
     }
   });
 };
@@ -154,7 +155,7 @@ async function renderWavMix(inT, outT, jobs, sr = 48000){
 }
 
 /* ---------------- export run ---------------- */
-async function run({ fmt, q, useIO, engine = null, burn = false }){
+async function run({ fmt, q, useIO, engine = null, burn = false, loudnorm = false }){
   const P = State.project;
   const inT  = (useIO && State.inPoint != null) ? State.inPoint : 0;
   const outT = (useIO && State.outPoint != null) ? State.outPoint : State.seqDuration();
@@ -219,7 +220,7 @@ async function run({ fmt, q, useIO, engine = null, burn = false }){
     const start = await D.proExportStart({
       format: fmt.id, quality: q, engine,
       fps: P.fps, width: P.width, height: P.height,
-      outPath, audioPath, subtitlesPath
+      outPath, audioPath, subtitlesPath, loudnorm
     });
     if (!start.ok){ closeModal(); ProExport.running = false; UI.toast('FFmpeg failed to start: ' + start.error, 'err'); return; }
 

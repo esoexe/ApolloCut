@@ -23,6 +23,8 @@ contextBridge.exposeInMainWorld('desktop', {
   saveExportDialog: opts => ipcRenderer.invoke('dialog:saveExport', opts),
   showItem: p => ipcRenderer.invoke('shell:showItem', p),
   openPath: p => ipcRenderer.invoke('shell:openPath', p),
+  appVersion: () => ipcRenderer.invoke('app:version'),
+  openExternal: url => ipcRenderer.invoke('shell:openExternal', url),
 
   /* pro (ffmpeg) export */
   proExportAvailable: () => ipcRenderer.invoke('export:pro:available'),

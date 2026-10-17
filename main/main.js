@@ -179,6 +179,10 @@ function registerIpc(){
 
   ipcMain.handle('shell:showItem', (e, p) => shell.showItemInFolder(p));
   ipcMain.handle('shell:openPath', (e, p) => shell.openPath(p));
+  ipcMain.handle('app:version', () => app.getVersion());
+  ipcMain.handle('shell:openExternal', (e, url) => {
+    if (typeof url === 'string' && /^https:\/\/(github\.com|esoexe\.github\.io)\//.test(url)) shell.openExternal(url);
+  });
   ipcMain.on('app:set-title', (e, t) => { if (w()) w().setTitle(t ? `${t} — ApolloCut` : 'ApolloCut'); });
 
   /* ---- LUT manager ---- */

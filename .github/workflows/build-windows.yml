@@ -22,6 +22,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate sources (quality gate)
+        run: |
+          Get-ChildItem renderer/js/*.js, main/*.js | ForEach-Object { node --check $_.FullName; if ($LASTEXITCODE) { exit 1 } }
+          $pkg = Get-Content package.json | ConvertFrom-Json
+          $hit = Select-String -Path renderer/js/app.js -Pattern ([regex]::Escape($pkg.version))
+          if (-not $hit) { Write-Error "About dialog not in sync with package.json version $($pkg.version)"; exit 1 }
+          Write-Host "quality gate passed: version $($pkg.version) consistent" 
+
       - name: Build NSIS installer
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
