@@ -4,495 +4,482 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ApolloCut — The Free & Open-Source Desktop Video Editor</title>
-<meta name="description" content="ApolloCut: Premiere-style non-linear editing, keyframed effects, GPU preview and a bundled FFmpeg pro render engine. 100% local, MIT licensed, free forever.">
+<meta name="description" content="ApolloCut — Premiere-style non-linear editing, keyframed effects, GPU preview and a bundled FFmpeg render engine. 100% local, MIT, free forever.">
 <link rel="icon" href="icon.png" type="image/png">
 <style>
+/* ============ APOLLOCUT: GREEK × OPENCODE ============ */
 :root{
-  --bg0:#0b0817; --bg1:#120c24; --panel:#181130; --panel2:#1f1640;
-  --line:#2d2254; --txt:#ece8ff; --dim:#a89fd0; --dim2:#7d73ac;
-  --brand:#8f6bff; --brand2:#e77bff; --cyan:#41c7ff; --green:#39d98d; --peach:#ff9d5c;
-  --r:16px;
+  --bg:#0a0a10; --bg2:#0e0d16; --panel:#12111c; --panel2:#161425;
+  --line:#241f3d; --line2:#322a55;
+  --txt:#ece9f7; --dim:#9d94c4; --dim2:#6e649b;
+  --vio:#8f6bff; --vio2:#e77bff; --cyan:#41c7ff; --gold:#c9a860;
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --mono:Consolas,'Cascadia Code',Menlo,monospace;
+  --r:14px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg0);color:var(--txt);font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;overflow-x:hidden}
+html,body{max-width:100%;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);-webkit-text-size-adjust:100%;line-height:1.6}
 a{color:var(--cyan);text-decoration:none}
-.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+a:hover{color:#8edcff}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 
-/* ---------- nav ---------- */
-nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(11,8,23,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;align-items:center;gap:14px;height:64px}
-nav img{width:32px;height:32px;border-radius:9px}
-nav .nm{font-weight:800;font-size:19px;letter-spacing:.4px}
-nav .nm b{color:var(--brand)}
-nav ul{display:flex;gap:26px;margin-left:auto;list-style:none;align-items:center}
-nav ul a{color:var(--dim);font-size:14.5px;font-weight:600;transition:color .2s}
+/* ---------------- nav ---------------- */
+nav{position:sticky;top:0;z-index:60;background:rgba(10,10,16,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:12px;height:60px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--txt);font-weight:800;font-size:17px;letter-spacing:.3px}
+.logo img{width:30px;height:30px;border-radius:8px}
+.logo b{color:var(--vio)}
+nav ul{display:flex;gap:24px;margin-left:auto;list-style:none;align-items:center}
+nav ul a{color:var(--dim);font-size:13.5px;font-weight:600;letter-spacing:.2px;transition:color .15s}
 nav ul a:hover{color:#fff}
-.btn{display:inline-flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:9px 18px;border-radius:11px;font-weight:700;font-size:14px;cursor:pointer;transition:transform .15s,box-shadow .2s,border-color .2s;text-decoration:none}
-.btn:hover{transform:translateY(-2px);border-color:var(--brand);box-shadow:0 8px 26px -8px rgba(143,107,255,.55)}
-.btn.hot{background:linear-gradient(120deg,var(--brand),#6f4fe0);border-color:transparent}
-.btn.hot:hover{box-shadow:0 10px 32px -6px rgba(143,107,255,.7)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--panel2);border:1px solid var(--line2);color:var(--txt);padding:9px 18px;border-radius:10px;font-weight:700;font-size:13.5px;cursor:pointer;transition:transform .15s,border-color .2s,box-shadow .2s;text-decoration:none;min-height:44px}
+.btn:hover{border-color:var(--vio);box-shadow:0 6px 22px -8px rgba(143,107,255,.5);color:#fff;transform:translateY(-1px)}
+.btn.hot{background:var(--vio);border-color:var(--vio);color:#fff}
+.btn.hot:hover{box-shadow:0 8px 28px -6px rgba(143,107,255,.6)}
+.btn.ghost{background:transparent}
 
-/* ---------- hero ---------- */
-header{padding:150px 0 40px;position:relative}
-header::before{content:"";position:absolute;inset:-60px 0 0;background:radial-gradient(900px 480px at 74% 30%,rgba(143,107,255,.26),transparent 62%),radial-gradient(620px 400px at 6% 92%,rgba(231,123,255,.13),transparent 60%);pointer-events:none}
-header .wrap{display:grid;grid-template-columns:1.04fr .96fr;gap:56px;align-items:center}
-.pt{position:absolute;width:4px;height:4px;border-radius:50%;background:#d8caff;opacity:.5;animation:rise 9s linear infinite}
-@keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.55}85%{opacity:.5}100%{transform:translateY(-340px);opacity:0}}
+/* ---------------- hero ---------------- */
+.hero{padding:84px 0 64px;position:relative;border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:2.4px;color:var(--dim);border:1px solid var(--line2);border-radius:20px;padding:7px 14px;text-transform:uppercase}
+.eyebrow i{font-style:normal;color:var(--gold)}
+.kick{display:flex;gap:14px;align-items:center;margin-top:26px;font-family:var(--mono);font-size:12px;color:var(--dim2);flex-wrap:wrap}
+.kick b{color:var(--vio2);font-weight:600}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(42px,6.2vw,74px);line-height:1.04;letter-spacing:-1px;margin:20px 0 18px}
+h1 em{font-style:italic;background:linear-gradient(115deg,#efeaff 35%,#b99aff 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--dim);font-size:16.5px;line-height:1.8;max-width:520px;margin-bottom:28px}
+.lede b{color:#d8d0f4}
+.cmd{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:12px 16px;font-family:var(--mono);font-size:13px;color:#d9d2f6;margin-bottom:24px;max-width:520px}
+.cmd::before{content:"$";color:var(--vio);font-weight:700}
+.cmd span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.ctas .big{font-size:15px;padding:13px 24px}
+.meta{margin-top:16px;font-family:var(--mono);font-size:12px;color:var(--dim2)}
+.meta b{color:#c8bdf0}
 
-/* museum hero art */
-.pcol{position:relative;width:max-content;margin:0 auto}
-.frame{position:relative;border-radius:26px;box-shadow:0 46px 110px -28px rgba(0,0,0,.9),0 0 0 1px rgba(143,107,255,.25);overflow:hidden}
-.frame img{display:block;width:min(430px,78vw);border-radius:26px}
-.pcol::before{content:"";position:absolute;inset:-40px -60px;border-radius:60px;background:radial-gradient(circle at 50% 42%,rgba(143,107,255,.35),transparent 66%);filter:blur(24px);animation:breath 4.6s ease-in-out infinite;z-index:-1}
-@keyframes breath{0%,100%{opacity:.55;transform:scale(.98)}50%{opacity:1;transform:scale(1.02)}}
-.frame .tag{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(20,13,40,.86);backdrop-filter:blur(6px);border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--brand2);padding:6px 16px;border-radius:20px;white-space:nowrap;box-shadow:0 8px 24px -8px rgba(0,0,0,.7)}
-.chip{position:absolute;width:46px;height:46px;border-radius:50%;box-shadow:0 10px 26px -8px rgba(0,0,0,.8),0 0 0 1px rgba(190,160,255,.5)}
-.chip img{width:100%;height:100%;border-radius:50%;display:block}
-.chip.c1{top:6%;left:-34px;animation:floaty 5.2s ease-in-out infinite}
-.chip.c2{top:38%;right:-40px;animation:floaty 6.4s .8s ease-in-out infinite}
-.chip.c3{bottom:16%;left:-44px;animation:floaty 7.1s 1.6s ease-in-out infinite}
-@keyframes floaty{0%,100%{transform:translateY(-7px) rotate(-3deg)}50%{transform:translateY(9px) rotate(3deg)}}
+/* hero art plate */
+.plate{position:relative}
+.plate .pf{position:relative;border:1px solid var(--line2);border-radius:20px;overflow:hidden;background:var(--bg2)}
+.plate .pf img{width:100%}
+.plate .pf::before{content:"";position:absolute;inset:10px;border:1px solid rgba(200,160,255,.22);border-radius:12px;pointer-events:none;z-index:2}
+.plate .cap{position:absolute;left:50%;transform:translateX(-50%);bottom:14px;background:rgba(10,10,16,.85);border:1px solid var(--line2);border-radius:20px;font-family:var(--mono);font-size:11px;letter-spacing:2px;color:#cabfff;padding:6px 16px;z-index:3;white-space:nowrap}
+.coe{position:absolute;width:14px;height:14px;border:2px solid var(--gold);opacity:.8}
+.coe.tl{top:-7px;left:-7px;border-right:none;border-bottom:none}
+.coe.tr{top:-7px;right:-7px;border-left:none;border-bottom:none}
+.coe.bl{bottom:-7px;left:-7px;border-right:none;border-top:none}
+.coe.br{bottom:-7px;right:-7px;border-left:none;border-top:none}
 
-/* platform card */
-.plat{display:grid;grid-template-columns:1fr .95fr;gap:40px;align-items:center;background:linear-gradient(180deg,var(--panel),#130d29);border:1px solid var(--line);border-radius:24px;padding:44px;overflow:hidden;position:relative}
-.plat::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 80% 50%,rgba(143,107,255,.2),transparent 65%);pointer-events:none}
-.plat .pimg{border-radius:18px;width:100%;display:block;border:1px solid rgba(143,107,255,.3);box-shadow:0 30px 70px -20px rgba(0,0,0,.85)}
-.plat .ptitle{font-size:28px;font-weight:900;margin:10px 0 12px}
-.plat p{color:var(--dim);font-size:15px;line-height:1.7;margin-bottom:22px;max-width:420px}
+/* ---------------- meander divider ---------------- */
+.meander{display:block;width:100%;height:22px;opacity:.5}
+.meander path{stroke:var(--vio);stroke-width:2;fill:none}
 
-.kicker{display:inline-flex;gap:8px;align-items:center;background:rgba(143,107,255,.12);border:1px solid rgba(143,107,255,.4);color:#cabfff;font-size:12.5px;font-weight:800;letter-spacing:1.6px;padding:7px 15px;border-radius:20px;text-transform:uppercase}
-h1{font-size:clamp(42px,6vw,66px);line-height:1.04;margin:22px 0 16px;font-weight:900;letter-spacing:-1.2px;background:linear-gradient(110deg,#fff 30%,#cdbfff 55%,#8f6bff 85%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.lede{color:var(--dim);font-size:17.5px;line-height:1.75;max-width:560px;margin-bottom:30px}
-.lede b{color:#d9d1ff}
-.ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.ctas .big{font-size:16px;padding:14px 26px}
-.meta{color:var(--dim2);font-size:13px;margin-top:14px}
-.meta b{color:#cabfff}
+/* ---------------- stats ---------------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.stat{padding:26px 10px 24px;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat .n{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--vio2)}
+.stat .l{margin-top:4px;font-family:var(--mono);font-size:11px;letter-spacing:1.6px;color:var(--dim2);text-transform:uppercase}
 
-/* ---------- marquee ---------- */
-.strip{border-block:1px solid var(--line);background:linear-gradient(90deg,var(--bg1),#171030 50%,var(--bg1));overflow:hidden;padding:10px 0;margin:26px 0 0}
-.strip .track{display:flex;gap:44px;white-space:nowrap;animation:marq 30s linear infinite;font-weight:800;font-size:13px;letter-spacing:1.8px;color:var(--dim);text-transform:uppercase;align-items:center}
-@keyframes marq{to{transform:translateX(-50%)}}
-.strip img{width:22px;height:22px;border-radius:6px;vertical-align:middle;margin-right:10px}
+/* ---------------- features ---------------- */
+section{padding:70px 0}
+h2{font-family:var(--serif);font-weight:700;font-size:clamp(30px,4.2vw,44px);letter-spacing:-.6px;margin:26px 0 12px}
+.sub{color:var(--dim);font-size:15.5px;max-width:620px;line-height:1.75;margin-bottom:40px}
+.latin{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;transition:transform .2s,border-color .2s,background .2s;position:relative}
+.card:hover{transform:translateY(-3px);border-color:var(--line2);background:var(--panel2)}
+.card .fi{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.card .svg{flex:none;width:34px;height:34px;color:var(--vio)}
+.card h3{font-size:15.5px;font-weight:700}
+.card p{color:var(--dim);font-size:13.5px;line-height:1.65}
 
-/* ---------- sections ---------- */
-section{padding:88px 0}
-h2{font-size:clamp(30px,4vw,42px);font-weight:900;letter-spacing:-.8px;margin-bottom:14px}
-.sub{color:var(--dim);font-size:16px;max-width:640px;line-height:1.7;margin-bottom:44px}
-.with-pattern{position:relative}
-.with-pattern::before{content:"";position:absolute;inset:0;background:url('art-pattern.png') repeat;opacity:.5;pointer-events:none}
-.with-pattern .wrap{position:relative}
+/* ---------------- pantheon ---------------- */
+.pan{background:var(--bg2);border-block:1px solid var(--line)}
+.trio{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px}
+.trio .pc{border:1px solid var(--line2);border-radius:18px;overflow:hidden;background:var(--bg);position:relative}
+.trio img{width:100%}
+.trio .pc .lb{position:absolute;left:14px;bottom:14px;font-family:var(--mono);font-size:11px;letter-spacing:2px;color:#e6defc;background:rgba(10,10,16,.85);border:1px solid var(--line2);border-radius:14px;padding:5px 12px}
 
-/* feature grid with statuette watermark */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{background:linear-gradient(180deg,var(--panel),#150f2b);border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:transform .2s,border-color .25s,box-shadow .3s;position:relative;overflow:hidden}
-.card:hover{transform:translateY(-6px);border-color:var(--brand);box-shadow:0 22px 44px -18px rgba(143,107,255,.4)}
-.card::after{content:"";position:absolute;right:-14px;bottom:-14px;width:74px;height:74px;background:url('art/hero-mini.webp') center/contain no-repeat;opacity:.24;filter:brightness(1.3);transition:opacity .3s;border-radius:50%}
-.card:hover::after{opacity:.55}
-.fimg{width:100%;border-radius:12px;display:block;margin-bottom:18px;border:1px solid rgba(143,107,255,.3);box-shadow:0 16px 38px -14px rgba(0,0,0,.85);transition:transform .35s,box-shadow .35s}
-.card:hover .fimg{transform:scale(1.02);box-shadow:0 22px 50px -14px rgba(143,107,255,.5)}
-.card .ic{font-size:26px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;background:rgba(143,107,255,.12);border:1px solid rgba(143,107,255,.35);border-radius:14px;margin-bottom:16px}
-.card h3{font-size:17px;margin-bottom:9px}
-.card p{color:var(--dim);font-size:14px;line-height:1.65}
+/* ---------------- platforms ---------------- */
+.oses{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.os{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px;text-align:center;transition:border-color .2s,transform .2s}
+.os:hover{border-color:var(--line2);transform:translateY(-3px)}
+.os .ico{font-size:26px;margin-bottom:8px}
+.os b{font-size:15px}
+.os .sz{font-family:var(--mono);font-size:11.5px;color:var(--dim2);margin:4px 0 14px;display:block}
+.os .btn{width:100%}
 
-/* gallery */
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.fel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;text-align:center;transition:transform .25s,box-shadow .3s,border-color .25s}
-.fel:hover{transform:translateY(-8px);border-color:var(--brand2);box-shadow:0 26px 60px -20px rgba(231,123,255,.45)}
-.fel img{width:100%;border-radius:14px;display:block;box-shadow:0 14px 34px -12px rgba(0,0,0,.8)}
-.fel .cap{margin-top:16px;font-weight:900;font-size:15px;letter-spacing:3px;color:var(--brand2)}
-.fel .cap2{color:var(--dim2);font-size:12.5px;margin-top:4px}
+/* ---------------- manifesto ---------------- */
+.mani{text-align:center;padding:86px 24px}
+.mani q{display:block;font-family:var(--serif);font-style:italic;font-size:clamp(24px,3.6vw,36px);line-height:1.5;color:#efeaff;max-width:760px;margin:0 auto 22px;quotes:"“" "”"}
+.mani q::before,.mani q::after{color:var(--gold)}
+.mani .sig{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--dim2);text-transform:uppercase}
+.laurel{width:26px;height:26px;color:var(--gold)}
 
-/* animated editor */
-.editor{background:linear-gradient(180deg,#191233,#120c26);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 40px 90px -30px rgba(0,0,0,.85);overflow:hidden;position:relative}
-.editor .bar{display:flex;gap:7px;align-items:center;height:38px;padding:0 16px;background:#0f0a20;border-bottom:1px solid var(--line)}
-.editor .dot{width:11px;height:11px;border-radius:50%}
-.editor .fname{margin-left:10px;color:var(--dim2);font-size:12px;font-weight:700}
-.editor .body{display:grid;grid-template-rows:230px 190px;border-bottom:1px solid var(--line)}
-.editor .preview{background:#0a0716;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.editor .preview img{width:132px;opacity:.9;animation:prevbob 5s ease-in-out infinite}
-@keyframes prevbob{0%,100%{transform:translateY(-4px) scale(1)}50%{transform:translateY(4px) scale(1.03)}}
-.editor .tc{position:absolute;bottom:10px;left:14px;font-family:Consolas,monospace;font-size:12px;color:var(--cyan);background:rgba(0,0,0,.55);padding:2px 8px;border-radius:6px}
-.editor .gpu{position:absolute;top:10px;right:14px;font-size:11px;color:var(--green);background:rgba(57,217,141,.12);border:1px solid rgba(57,217,141,.4);padding:2px 8px;border-radius:10px;font-weight:800}
-.tl{background:#0d0920;padding:14px;display:flex;flex-direction:column;gap:10px;position:relative}
-.tr{display:flex;gap:6px;height:46px}
-.clip{border-radius:7px;height:100%;position:relative;overflow:hidden}
-.clip i{position:absolute;left:8px;top:5px;font-style:normal;font-size:10px;font-weight:800;color:rgba(255,255,255,.85)}
-.wave{background:linear-gradient(180deg,#173107,#122507);flex:1;display:flex;align-items:flex-end;gap:3px;padding:4px 8px;border-radius:7px;height:100%}
-.wave span{display:block;flex:1;background:#39d98d;border-radius:2px;animation:eq 1.1s ease-in-out infinite}
-@keyframes eq{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
-.ph{position:absolute;top:0;bottom:0;width:2px;background:var(--cyan);box-shadow:0 0 12px var(--cyan);animation:sweep 6s linear infinite;z-index:2}
-@keyframes sweep{from{left:4%}to{left:96%}}
-
-/* banner showcase */
-.showcase img{width:100%;border-radius:var(--r);border:1px solid var(--line);box-shadow:0 40px 90px -30px rgba(0,0,0,.8);display:block}
-
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.step{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:26px;position:relative}
-.step .thumb{position:absolute;top:-22px;left:24px;width:44px;height:44px;border-radius:12px;overflow:hidden;box-shadow:0 10px 26px -8px rgba(0,0,0,.8),0 0 0 2px var(--brand)}
-.step .thumb img{width:100%;height:100%;display:block}
-.step h3{margin:12px 0 10px;font-size:16.5px}
-.step p{color:var(--dim);font-size:14px;line-height:1.65}
-.step code{background:#0d0920;border:1px solid var(--line);padding:2px 7px;border-radius:6px;font-size:12.5px;color:#d8caff}
-
-/* faq */
-.faq details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-bottom:12px}
-.faq summary{cursor:pointer;font-weight:700;font-size:15.5px;list-style:none;display:flex;justify-content:space-between;align-items:center}
-.faq summary::before{content:"";width:20px;height:20px;background:url('art/hero-mini.webp') center/contain no-repeat;margin-right:12px;border-radius:50%}
-.faq summary span{flex:1}
-.faq summary::after{content:"+";color:var(--brand);font-size:20px;font-weight:900;transition:transform .2s}
+/* ---------------- faq ---------------- */
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;padding:16px 20px}
+.faq summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq summary::after{content:"+";color:var(--vio);font-size:18px;font-weight:800;transition:transform .18s}
 .faq details[open] summary::after{transform:rotate(45deg)}
-.faq details p{color:var(--dim);font-size:14.5px;line-height:1.7;margin-top:12px}
+.faq details p{color:var(--dim);font-size:14px;line-height:1.7;margin-top:10px}
 
-/* final cta */
-.final{text-align:center;background:radial-gradient(700px 320px at 50% 100%,rgba(143,107,255,.22),transparent 65%)}
-.final .halo{width:220px;margin:0 auto 26px;animation:floaty 7s ease-in-out infinite}
-.final .halo img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;display:block;filter:drop-shadow(0 20px 44px rgba(143,107,255,.45));border:2px solid rgba(143,107,255,.45)}
-@keyframes slowspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-.final h2{font-size:clamp(34px,5vw,54px)}
-.final .ctas{justify-content:center;margin-top:8px}
+/* ---------------- final ---------------- */
+.fin{text-align:center;border-top:1px solid var(--line);padding:78px 24px 70px;position:relative}
+.fin .fbaj{position:absolute;inset:0;background:radial-gradient(560px 260px at 50% 0%,rgba(143,107,255,.12),transparent 70%);pointer-events:none}
+.fin img{width:120px;height:120px;border-radius:50%;margin:0 auto 26px;border:2px solid var(--line2)}
+.fin .mini img{width:110px;height:110px}
+.fin .ctas{justify-content:center;margin-top:30px}
 
-footer{border-top:1px solid var(--line);padding:34px 0;color:var(--dim2);font-size:13.5px}
-footer .wrap{display:flex;gap:26px;flex-wrap:wrap;align-items:center}
-footer img{width:26px;height:26px;border-radius:8px;vertical-align:middle;margin-right:10px}
-footer .fl{margin-left:auto;display:flex;gap:22px}
+footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--dim2);font-size:13px;font-family:var(--mono)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+footer .fl{margin-left:auto;display:flex;gap:20px;font-family:var(--sans)}
+footer .fl a{color:var(--dim);font-size:13px}
+footer .fl a:hover{color:#fff}
 
-.risein{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
-.risein.vis{opacity:1;transform:none}
-/* ---------- responsive nav ---------- */
-.burger{display:none;width:46px;height:46px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;margin-left:auto}
-.burger span{display:block;width:20px;height:2px;background:var(--txt);border-radius:2px;transition:transform .25s,opacity .2s}
-.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.burger.open span:nth-child(2){opacity:0}
-.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mobilemenu{display:none;position:fixed;top:64px;left:0;right:0;z-index:49;background:rgba(11,8,23,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:14px 22px calc(20px + env(safe-area-inset-bottom));flex-direction:column;gap:4px}
-.mobilemenu.open{display:flex}
-.mobilemenu a{color:var(--txt);font-weight:700;font-size:16.5px;padding:13px 10px;border-radius:10px;display:block}
-.mobilemenu a:hover{background:var(--panel)}
-.mobilemenu .btn{justify-content:center;margin-top:10px;padding:14px;font-size:15px}
+/* entrance */
+.r{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.r.v{opacity:1;transform:none}
 
-@media(max-width:1024px){
-  .grid{grid-template-columns:1fr 1fr}
-  .steps{grid-template-columns:1fr}
-  .wrap{padding:0 26px}
+/* ============ live animation layer (transform-only, jank-proof) ============ */
+/* 1. hero plate: candlelight shimmer sweeps across every ~7s */
+.pf::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 42%,rgba(200,170,255,.14) 50%,transparent 58%);transform:translateX(-120%);animation:sheen 7s ease-in-out 1.6s infinite;pointer-events:none;z-index:2}
+@keyframes sheen{0%{transform:translateX(-120%)}38%{transform:translateX(120%)}100%{transform:translateX(120%)}}
+/* glow breathing behind plate, ultra-subtle, single gradient */
+.plate::before{content:"";position:absolute;inset:-26px -34px;background:radial-gradient(55% 60% at 50% 45%,rgba(143,107,255,.20),transparent 72%);z-index:-1;animation:breath 5.4s ease-in-out infinite}
+@keyframes breath{0%,100%{opacity:.6}50%{opacity:1}}
+/* gold corners slowly pulse once set */
+.coe{animation:coep 6s ease-in-out infinite}
+.coe.tr{animation-delay:1.5s}.coe.br{animation-delay:3s}.coe.bl{animation-delay:4.5s}
+@keyframes coep{0%,100%{opacity:.55}50%{opacity:1}}
+/* 2. meander: draws itself in, then rests as a printed border */
+.meander path{stroke-dasharray:260;stroke-dashoffset:260}
+.meander.draw path{animation:drawme 1.6s ease-out forwards}
+@keyframes drawme{to{stroke-dashoffset:0}}
+/* 3. hero headline: word-by-word ceremonial rise (set by JS) */
+h1 .w{display:inline-block;opacity:0;transform:translateY(22px);animation:wordup .7s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes wordup{to{opacity:1;transform:none}}
+/* 4. terminal chip: live typing (JS) with blinking caret */
+.cmd span.ty::after{content:"▌";color:var(--vio);animation:caret 1s steps(1) infinite;margin-left:2px}
+@keyframes caret{0%,49%{opacity:1}50%,100%{opacity:0}}
+/* 5. laurel sway — ceremonial, ±2° */
+.laurel{animation:sway 7s ease-in-out infinite;transform-origin:50% 85%}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+/* 6. end-card bust: slow courtly float */
+.fin .mini img{animation:floaty 8s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(-6px)}50%{transform:translateY(8px)}}
+/* 7. plates in the gallery breathe on hover */
+.trio .pc img{transition:transform .5s ease}
+.trio .pc:hover img{transform:scale(1.045)}
+/* 8. eyebrow chip: intro slide */
+.eyebrow{animation:eyebrow .9s ease-out .15s both}
+@keyframes eyebrow{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+/* number tick on stats when revealed */
+.stat .n{transition:transform .4s ease}
+.stat.v .n,.r.v .n{animation:ntick .5s cubic-bezier(.2,1.4,.3,1)}
+@keyframes ntick{from{transform:scale(.7)}to{transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){
+  .pf::after,.plate::before,.coe,.laurel,.fin .mini img,.eyebrow{animation:none!important}
+  h1 .w{opacity:1;transform:none;animation:none!important}
+  .meander path{stroke-dashoffset:0!important;animation:none!important}
 }
-@media(max-width:900px){
-  header .wrap{grid-template-columns:1fr;gap:48px}
-  .plat{grid-template-columns:1fr;padding:30px}
-  .grid{grid-template-columns:1fr 1fr}
-  .steps,.gallery{grid-template-columns:1fr}
+
+/* ============ responsive ============ */
+.burger{display:none;width:44px;height:44px;border:1px solid var(--line2);border-radius:10px;background:var(--panel2);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;margin-left:auto}
+.burger span{display:block;width:18px;height:2px;background:var(--txt);border-radius:2px;transition:transform .2s,opacity .18s}
+.burger.o span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.o span:nth-child(2){opacity:0}
+.burger.o span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mm{display:none;position:sticky;top:60px;z-index:59;background:rgba(10,10,16,.98);border-bottom:1px solid var(--line);padding:10px 20px calc(16px + env(safe-area-inset-bottom));flex-direction:column;gap:2px}
+.mm.o{display:flex}
+.mm a{color:var(--txt);font-weight:700;font-size:16px;padding:12px 8px;border-radius:9px}
+.mm a:hover{background:var(--panel)}
+.mm .btn{justify-content:center;margin-top:8px}
+
+@media(max-width:1020px){ .grid{grid-template-columns:1fr 1fr} .trio{grid-template-columns:1fr 1fr} .trio .pc:first-child{grid-column:1/-1} }
+@media(max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;gap:40px}
   nav ul{display:none}
   .burger{display:flex}
-  .pcol{margin-top:6px}
-  section{padding:64px 0}
-  header{padding:118px 0 30px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line)}
+  section{padding:54px 0}
+  .hero{padding:56px 0 46px}
 }
-@media(max-width:700px){
-  .grid[style*="repeat(2,1fr)"]{grid-template-columns:1fr!important}
-  .grid[style*="1fr 1fr"]{grid-template-columns:1fr!important}
-  .editor .tl{padding:9px}
-  .chip{width:38px;height:38px}
-  .frame img{width:min(340px,84vw)}
-  .ctas .big{font-size:15px;padding:13px 18px}
-  .final .halo{width:170px}
-}
-@media(max-width:560px){
+@media(max-width:680px){
+  .grid,.oses,.trio{grid-template-columns:1fr}
   .wrap{padding:0 18px}
-  nav .wrap{padding:0 14px}
-  h1{font-size:clamp(36px,11vw,46px)}
-  h2{font-size:clamp(27px,8vw,32px)}
-  .lede{font-size:16px}
-  .sub{font-size:15px}
-  .btn{padding:10px 14px;font-size:13.5px;min-height:44px}
+  h1{font-size:clamp(38px,11vw,52px)}
   .ctas{flex-direction:column;align-items:stretch}
-  .cta-done.row{flex-direction:row}
-  .strip .track{font-size:11px;letter-spacing:1.2px;gap:26px}
-  .card{padding:20px}
-  .step{padding:22px 20px}
-  .final .halo{width:150px}
-  .editor .bar{height:32px}
-  .editor .fname{font-size:10px}
-  .editor .preview img{width:100px}
-  .plat{padding:22px}
-  section{padding:52px 0}
-  footer .wrap{flex-direction:column;align-items:flex-start;gap:12px}
-  footer .fl{margin-left:0;flex-wrap:wrap;gap:16px}
-  .pcol{margin-bottom:8px}
+  .ctas .big{justify-content:center}
+  .cmd{font-size:11.5px}
+  .mani{padding:64px 18px}
+  .fin .ctas{flex-direction:column;align-items:stretch}
+  .fin .btn{width:100%}
+  footer .fl{margin-left:0}
 }
-@media(max-width:400px){
-  nav .nm{font-size:16.5px}
-  h1{font-size:34px}
-  .frame .tag{font-size:11px;padding:5px 12px}
-  .chip.c2{display:none}
-}
-/* hard overflow guards + ios polish */
-html,body{max-width:100%;overflow-x:hidden}
-img{max-width:100%;height:auto}
-body{-webkit-text-size-adjust:100%}
-nav .wrap,footer .wrap{padding-left:max(28px,env(safe-area-inset-left));padding-right:max(28px,env(safe-area-inset-right))}
-@media(max-width:560px){nav .wrap,footer .wrap{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}}
 @media (hover:none) and (pointer:coarse){
-  .card:active,.btn:active,.fel:active{transform:scale(.985);border-color:var(--brand)}
+  .card:active,.os:active,.btn:active{transform:scale(.985)}
 }
 @media (prefers-reduced-motion: reduce){
-  *{animation-duration:.001s!important;transition-duration:.001s!important}
+  *{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
+  .r{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
 
 <nav><div class="wrap">
-  <img src="icon.png" alt="ApolloCut statue icon">
-  <span class="nm">Apollo<b>Cut</b></span>
+  <a class="logo" href="#"><img src="icon.png" alt="ApolloCut statue icon"><span>Apollo<b>Cut</b></span></a>
   <ul>
     <li><a href="#features">Features</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#how">Get started</a></li>
+    <li><a href="#pantheon">Pantheon</a></li>
+    <li><a href="#download">Download</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a class="btn" href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">★ GitHub</a></li>
+    <li><a href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">GitHub ↗</a></li>
     <li><a class="btn hot" href="#download">⬇ Download</a></li>
   </ul>
-  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </div></nav>
-<div class="mobilemenu" id="mobilemenu">
+<div class="mm" id="mm">
   <a href="#features">Features</a>
-  <a href="#gallery">Gallery</a>
-  <a href="#how">Get started</a>
+  <a href="#pantheon">Pantheon</a>
+  <a href="#download">Download</a>
   <a href="#faq">FAQ</a>
   <a class="btn hot" href="#download">⬇ Download ApolloCut</a>
-  <a class="btn" href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">★ View on GitHub</a>
+  <a class="btn" href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">↗ GitHub repo</a>
 </div>
 
-<header>
-  <span class="pt" style="left:12%;animation-delay:0s"></span>
-  <span class="pt" style="left:22%;animation-delay:2.4s"></span>
-  <span class="pt" style="left:55%;animation-delay:1.1s"></span>
-  <span class="pt" style="left:76%;animation-delay:3.6s"></span>
-  <span class="pt" style="left:90%;animation-delay:.7s"></span>
-  <div class="wrap">
-    <div>
-      <span class="kicker">v<span id="ver">1.3.3</span> · Windows · no account, no cloud</span>
-      <h1>Editing that belongs to <i>everyone</i>.</h1>
-      <p class="lede">ApolloCut is a <b>Premiere-style desktop video editor</b> — multi-track timeline, keyframed effects, audio mixing and a real <b>FFmpeg render engine</b> — that never phones home, never asks for a subscription, and never will. The blindfold is our contract with you: <b>free forever</b>.</p>
-      <div class="ctas" id="download">
-        <a class="btn hot big" id="dl" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇&nbsp; Download for Windows</a>
-        <a class="btn big" href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">⌥&nbsp; View source</a>
-      </div>
-      <p class="meta" id="dlmeta">One 99 MB installer · everything bundled · Windows 10/11</p>
+<header class="hero"><div class="wrap">
+  <div>
+    <span class="eyebrow"><i>GRATIS · APERTVS · AETERNVS</i> free · open · forever</span>
+    <h1>Edit like the <em>gods</em> intended.</h1>
+    <p class="lede">ApolloCut is a <b>Premiere-style desktop video editor</b> — multi-track timeline, keyframed effects, audio mixing and a real <b>FFmpeg render engine</b>. No account. No cloud. No subscription. The blindfold is a contract: free editing belongs to everyone.</p>
+    <div class="cmd"><span>github.com — esoexe / ApolloCut — releases — latest</span></div>
+    <div class="ctas" id="download">
+      <a class="btn hot big" id="dl" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇ Download for Windows</a>
+      <a class="btn big" href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">★ View source ↗</a>
     </div>
-
-    <div class="pcol">
-      <div class="frame">
-        <img src="art/hero.webp" alt="The blindfolded marble bust of Apollo — ApolloCut's guardian, lit in violet">
-        <span class="tag">⚖ the statue of free editing</span>
-      </div>
-      <span class="chip c1"><img src="art/hero-mini.webp" alt=""></span>
-      <span class="chip c2"><img src="art/hero-mini.webp" alt=""></span>
-      <span class="chip c3"><img src="art/hero-mini.webp" alt=""></span>
+    <p class="meta" id="dlmeta">v1.5.0 · Windows · macOS · Linux · MIT license</p>
+  </div>
+  <div class="plate">
+    <div class="pf r">
+      <img src="art/hero.webp" alt="Engraved plate: the blindfolded marble bust of Apollo beneath radiating lines">
+      <span class="coe tl"></span><span class="coe tr"></span><span class="coe bl"></span><span class="coe br"></span>
+      <span class="cap">CHARTVS I · THE GUARDIAN</span>
     </div>
   </div>
-</header>
+</div></header>
 
-<div class="strip"><div class="track">
-  <span><img src="art/hero-mini.webp" alt="">non-linear multi-track editing</span><span><img src="art/hero-mini.webp" alt="">keyframed effects · bezier easing</span><span><img src="art/hero-mini.webp" alt="">h.264 · hevc · prores · webm</span><span><img src="art/hero-mini.webp" alt="">100% local — media never leaves your machine</span><span><img src="art/hero-mini.webp" alt="">no subscription · no telemetry</span><span><img src="art/hero-mini.webp" alt="">MIT licensed, free forever</span>
-  <span><img src="art/hero-mini.webp" alt="">non-linear multi-track editing</span><span><img src="art/hero-mini.webp" alt="">keyframed effects · bezier easing</span><span><img src="art/hero-mini.webp" alt="">h.264 · hevc · prores · webm</span><span><img src="art/hero-mini.webp" alt="">100% local — media never leaves your machine</span><span><img src="art/hero-mini.webp" alt="">no subscription · no telemetry</span><span><img src="art/hero-mini.webp" alt="">MIT licensed, free forever</span>
-</div></div>
+<svg class="meander" viewBox="0 0 120 22" preserveAspectRatio="none"><path d="M0 11 h20 v-8 h14 v16 h-8 v-8 h14 v8 h-6 m14 0 h20 v-8 h14 v16 h-8 v-8 h14 v8 h-6 m14 0 h20 v-8 h14 v16 h-8 v-8 h14 v8 h-6"/></svg>
 
-<section style="padding-top:70px"><div class="wrap">
-  <div class="plat risein">
-    <div style="position:relative">
-      <span class="kicker">Desktop App</span>
-      <div class="ptitle">Windows · macOS · Linux</div>
-      <p>One installer per platform — Electron runtime, FFmpeg render engine and the whole studio bundled. The statue guards every pixel, locally.</p>
-      <div class="ctas" id="plat-ctas">
-        <a class="btn hot big" data-plat="exe" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇&nbsp; Windows 10/11</a>
-        <a class="btn big" data-plat="dmg" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇&nbsp; macOS (DMG)</a>
-        <a class="btn big" data-plat="appimage" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇&nbsp; Linux (AppImage)</a>
-      </div>
-      <p class="meta" style="margin-top:16px">always latest from <a href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">GitHub Releases</a> · built from source by CI on every tag</p>
-    </div>
-    <img class="pimg" src="art/platform.webp" alt="The Apollo bust standing before four glowing window panes — desktop spirit">
-  </div>
-</div></section>
+<div class="stats">
+  <div class="stat r"><div class="n" id="stat-ver">v1.5.0</div><div class="l">current release</div></div>
+  <div class="stat r"><div class="n">5</div><div class="l">install packages</div></div>
+  <div class="stat r"><div class="n">0</div><div class="l">tracking pixels</div></div>
+  <div class="stat r"><div class="n" id="doc-ver">MIT</div><div class="l">license · forever</div></div>
+</div>
 
 <section id="features"><div class="wrap">
-  <h2 class="risein">Premiere-grade. <i>Zero price.</i></h2>
-  <p class="sub risein">Every tool here runs on your machine. Import, cut, grade, mix, export — the whole professional loop, with the keyboard workflow editors already have in their hands.</p>
-  <div class="grid" style="grid-template-columns:repeat(2,1fr)">
-    <div class="card risein"><img class="fimg" src="art/feature-timeline.webp" alt="The bust ringed by holographic timeline tracks"><h3>Non-linear timeline</h3><p>Multi-track video &amp; audio, blade, ripple-delete, detach audio, nested sequences, snapping, markers — the editing grammar professionals speak, guarded by the ghost of Olympus.</p></div>
-    <div class="card risein"><img class="fimg" src="art/feature-effects.webp" alt="The bust orbited by bezier curves and keyframe handles"><h3>Keyframed effects</h3><p>Bezier easing on every property. Adjustment layers grade whole stacks. Chroma key, blur, noise, sharpen, saturation, color wheels, crop &amp; transform.</p></div>
-    <div class="card risein"><img class="fimg" src="art/feature-audio.webp" alt="The bust crowned by a waveform laurel"><h3>Audio, mixed properly</h3><p>Per-clip gain, fades with curve handles, solo/mute per track, master live meters. The sound of your cut is not an afterthought.</p></div>
-    <div class="card risein"><img class="fimg" src="art/feature-export.webp" alt="The bust spiralled by a film-strip ribbon of codecs"><h3>FFmpeg render engine</h3><p>Bundled pro export — H.264, HEVC, ProRes, WebM, plus WAV/MP3/GIF. Hardware-aware fallback chain means you always get a file out.</p></div>
-  </div>
-  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:20px">
-    <div class="card risein"><div class="ic">⚡</div><h3>GPU-accelerated preview</h3><p>WebGL compositor with automatic CPU fallback. Scrub and play your graded timeline in real time on ordinary hardware.</p></div>
-    <div class="card risein"><div class="ic">🧠</div><h3>Optional local AI tools</h3><p>Whisper transcription and whisper-cut — entirely offline when you drop a model in. AI ambitions, zero spying.</p></div>
-  </div>
-</div></section>
-
-<section id="gallery" class="with-pattern" style="padding-top:0"><div class="wrap">
-  <h2 class="risein">The museum of free editing.</h2>
-  <p class="sub risein">One statue, three commandments. This is the face you'll find on the app icon, the installer, this page — and nowhere near a paywall.</p>
-  <div class="gallery">
-    <div class="fel risein">
-      <img src="art/hero.webp" alt="ApolloCut — the guardian bust">
-      <div class="cap">FREE</div>
-      <div class="cap2">no subscription · no watermark · no trial timer</div>
+  <span class="latin">Ⅰ · Instrvmenta — the instruments</span>
+  <h2 class="r">A full studio. A zero receipt.</h2>
+  <p class="sub r">Professional grammar, no asterisks. Cut, grade, mix and render with the instruments rental-suites charge monthly for.</p>
+  <div class="grid">
+    <div class="card r">
+      <div class="fi"><svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M2 12h20M7 4v13M17 4v13"/><path d="M7 21h10M9.5 7.5l4 3-4 3z"/></svg><h3>Non-linear timeline</h3></div>
+      <p>Multi-track video &amp; audio, blade, ripple-delete, detach audio, nested sequences, snapping, markers. The grammar your hands already know.</p>
     </div>
-    <div class="fel risein">
-      <img src="art/feature-timeline.webp" alt="ApolloCut — the timeline halo" style="transition:transform .4s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform=''">
-      <div class="cap">OPEN</div>
-      <div class="cap2">MIT source, fork it, remix it, ship it</div>
+    <div class="card r">
+      <div class="fi"><svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 17c4-10 8-10 12 0"/><circle cx="3" cy="17" r="1.6"/><circle cx="15" cy="17" r="1.6"/><path d="M9 10l3 1 3-3"/><circle cx="21" cy="8" r="1.6"/></svg><h3>Keyframed effects</h3></div>
+      <p>Bezier easing on every value. Adjustment layers grade whole stacks. Chroma key, blur, sharpen, saturation, color wheels, crop &amp; transform.</p>
     </div>
-    <div class="fel risein">
-      <img src="art/feature-export.webp" alt="ApolloCut — your media, your machine">
-      <div class="cap">YOURS</div>
-      <div class="cap2">100% local — media never leaves your disk</div>
+    <div class="card r">
+      <div class="fi"><svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 14v-4M8 18V6M12 21V3M16 18V6M20 14v-4"/></svg><h3>Audio, mixed properly</h3></div>
+      <p>Per-clip gain, fades with curve handles, solo/mute per track, live master meters — and one-tick <b>−14 LUFS</b> loudness at export.</p>
+    </div>
+    <div class="card r">
+      <div class="fi"><svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M7 5v14M17 5v14M2 9h5M2 15h5M17 9h5M17 15h5"/></svg><h3>FFmpeg render engine</h3></div>
+      <p>Bundled pro export: H.264, HEVC, ProRes, WebM, WAV, MP3, GIF. Hardware encoders auto-detected; software fallback never fails you.</p>
+    </div>
+    <div class="card r">
+      <div class="fi"><svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M9 21h6M12 16v5M10.5 8.5l4 3-4 3z"/></svg><h3>GPU preview</h3></div>
+      <p>WebGL compositor with CPU fallback — real-time scrubbing on ordinary hardware. PX proxies when the footage fights back.</p>
+    </div>
+    <div class="card r">
+      <div class="fi"><svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="5" r="2.2"/><path d="M8.5 13a4 4 0 017 0M5 19a6.5 6.5 0 0114 0M12 21v-2"/></svg><h3>Optional local AI</h3></div>
+      <p>Whisper transcription &amp; whisper-cut, fully offline when you drop a model in. Plus scopes, LUTs, EDL interchange, multicam sync.</p>
     </div>
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <h2 class="risein">Inside the app.</h2>
-  <p class="sub risein">A quick taste of the ApolloCut desk — the statue keeps you company in the program monitor while the playhead does the laps.</p>
-  <div class="editor risein" aria-hidden="true">
-    <div class="bar">
-      <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
-      <span class="fname">ApolloCut — my-first-cut.apollocut.json</span>
+<div class="pan" id="pantheon"><section style="padding-bottom:64px"><div class="wrap">
+  <span class="latin">Ⅱ · Pantheon — the plates</span>
+  <h2 class="r">Art that earns its discourse.</h2>
+  <p class="sub r">Each ApolloCut plate is a full engraving folio — the same guardian bust, keeping watch over every craft inside the app.</p>
+  <div class="trio">
+    <div class="pc r"><img src="art/feature-timeline.webp" alt="Chronos Aeternus — clockwork timeline engraving"><span class="lb">Ⅰ · CHRONOS</span></div>
+    <div class="pc r"><img src="art/feature-effects.webp" alt="Engraved bezier curves and keyframe handles"><span class="lb">Ⅱ · TVLISVA</span></div>
+    <div class="pc r"><img src="art/feature-audio.webp" alt="Harmonia Sonica — waveform laurel engraving"><span class="lb">Ⅲ · HARMONIA</span></div>
+  </div>
+</div></section></div>
+
+<section id="dl" style="padding-top:64px"><div class="wrap">
+  <span class="latin">Ⅲ · Pro omnibus — for all</span>
+  <h2 class="r">One statue. Every desk.</h2>
+  <p class="sub r">Installers for the three desktops, built from the same source by CI on every release tag — never a third-party mirror.</p>
+  <div class="oses">
+    <div class="os risein r">
+      <div class="ico">🪟</div>
+      <b>Windows 10 / 11</b>
+      <span class="sz">nsis installer · ~99 MB</span>
+      <a class="btn hot" data-plat="exe" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇ .exe</a>
     </div>
-    <div class="body">
-      <div class="preview">
-        <img src="art/hero-mini.webp" alt="">
-        <span class="tc" id="tc">00:00:00:00</span>
-        <span class="gpu">GPU ✓</span>
-      </div>
-      <div class="tl">
-        <span class="ph"></span>
-        <div class="tr">
-          <div class="clip" style="flex:2.6;background:linear-gradient(120deg,#8f6bff,#6a48d8)"><i>title-card.mp4</i></div>
-          <div class="clip" style="flex:1.2;background:linear-gradient(120deg,#e77bff,#b34fc9)"><i>b-roll</i></div>
-          <div class="clip" style="flex:2.1;background:linear-gradient(120deg,#41c7ff,#2f94c9)"><i>interview.mp4</i></div>
-        </div>
-        <div class="tr">
-          <div class="clip" style="flex:1.4;background:linear-gradient(120deg,#39d98d,#23a567)"><i>fx-grade</i></div>
-          <div class="clip" style="flex:2.9;background:linear-gradient(120deg,#8f6bff,#6a48d8)"><i>sequence</i></div>
-          <div class="clip" style="flex:1;background:linear-gradient(120deg,#ff9d5c,#d8703d)"><i>out</i></div>
-        </div>
-        <div class="tr">
-          <div class="wave">
-            <span style="height:40%"></span><span style="height:70%;animation-delay:.15s"></span><span style="height:55%;animation-delay:.3s"></span><span style="height:85%;animation-delay:.05s"></span><span style="height:60%;animation-delay:.45s"></span><span style="height:75%;animation-delay:.25s"></span><span style="height:45%"></span><span style="height:80%;animation-delay:.35s"></span><span style="height:50%;animation-delay:.1s"></span><span style="height:65%;animation-delay:.4s"></span><span style="height:90%;animation-delay:.2s"></span><span style="height:55%;animation-delay:.5s"></span><span style="height:72%;animation-delay:.15s"></span><span style="height:48%;animation-delay:.35s"></span><span style="height:62%;animation-delay:.05s"></span>
-          </div>
-        </div>
-      </div>
+    <div class="os risein r">
+      <div class="ico">🍎</div>
+      <b>macOS universal</b>
+      <span class="sz">intel + apple silicon · dmg · ~190 MB</span>
+      <a class="btn" data-plat="dmg" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇ .dmg</a>
+    </div>
+    <div class="os risein r">
+      <div class="ico">🐧</div>
+      <b>Linux</b>
+      <span class="sz">AppImage · deb for debian/ubuntu</span>
+      <a class="btn" data-plat="appimage" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇ .AppImage</a>
     </div>
   </div>
 </div></section>
 
-<section class="showcase" style="padding-top:0"><div class="wrap">
-  <img src="banner.gif" alt="ApolloCut — animated banner">
+<div class="mani">
+  <span class="latin" style="display:block;margin-bottom:26px">Ⅳ · Contractvm — the contract</span>
+  <q class="r">Editing tools should not play favorites with your wallet.</q>
+  <span class="sig r"><svg class="laurel" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21c-1-2.5-3.2-4-6-4s-4 1-4 1c2 .5 4 2 5 3.5S12 15 12 15s2 4 5 7.5c1-1.5 3-3 5-3.5 0 0-1-1-4-1s-5 1.5-6 3.5z"/><path d="M12 15c-1-3.5-3-5-5-6 1 2.5 3 4 5 6zM12 15c1-3.5 3-5 5-6-1 2.5-3 4-5 6zM11 12c-.6-3-2-4.5-4-5.5.8 2.4 2.4 4 4 5.5zM13 12c.6-3 2-4.5 4-5.5-.8 2.4-2.4 4-4 5.5zM11 8c-.4-2.4-1.6-3.8-3.2-4.4.6 2 1.9 3.4 3.2 4.4zM13 8c.4-2.4 1.6-3.8 3.2-4.4-.6 2-1.9 3.4-3.2 4.4z"/><path d="M11 6.5c-.3-1.9-1.2-3-2.4-3.5.4 1.6 1.4 2.7 2.4 3.5zM13 6.5c.3-1.9 1.2-3 2.4-3.5-.4 1.6-1.4 2.7-2.4 3.5z"/><circle cx="12" cy="3.5" r="1.3"/></svg> the blindfold covenant <svg class="laurel" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21c-1-2.5-3.2-4-6-4s-4 1-4 1c2 .5 4 2 5 3.5S12 15 12 15s2 4 5 7.5c1-1.5 3-3 5-3.5 0 0-1-1-4-1s-5 1.5-6 3.5z"/><path d="M12 15c-1-3.5-3-5-5-6 1 2.5 3 4 5 6zM12 15c1-3.5 3-5 5-6-1 2.5-3 4-5 6zM11 12c-.6-3-2-4.5-4-5.5.8 2.4 2.4 4 4 5.5zM13 12c.6-3 2-4.5 4-5.5-.8 2.4-2.4 4-4 5.5zM11 8c-.4-2.4-1.6-3.8-3.2-4.4.6 2 1.9 3.4 3.2 4.4zM13 8c.4-2.4 1.6-3.8 3.2-4.4-.6 2-1.9 3.4-3.2 4.4z"/><path d="M11 6.5c-.3-1.9-1.2-3-2.4-3.5.4 1.6 1.4 2.7 2.4 3.5zM13 6.5c.3-1.9 1.2-3 2.4-3.5-.4 1.6-1.4 2.7-2.4 3.5z"/><circle cx="12" cy="3.5" r="1.3"/></svg></span>
+</div>
+
+<section id="faq" style="padding-top:0"><div class="wrap faq">
+  <span class="latin">Ⅴ · Quaestiones — frequent</span>
+  <h2 class="r">Questions, answered.</h2>
+  <p class="sub r">The fine print reads like the headline, so here it is in FAQ form.</p>
+  <details class="r"><summary>Is it actually free? What's the catch?</summary><p>Truly free — MIT licensed, no premium tier, no trial, no watermark. It's young open software; bug reports are the exchange, that's all.</p></details>
+  <details class="r"><summary>Does it send my videos anywhere?</summary><p>No. The editor runs 100% locally: no accounts, no telemetry, no network calls. Drop an NDA project inside; it never leaves your disk.</p></details>
+  <details class="r"><summary>Why does Windows warn me when installing?</summary><p>Unsigned open-source executables read as "unknown" to SmartScreen. Click <b>More info → Run anyway</b>. The source is public; you can rebuild the installer yourself to byte-compare.</p></details>
+  <details class="r"><summary>How do updates work?</summary><p>The app soft-checks Releases at startup and tells you when a newer build exists — one click to download; installers upgrade in place.</p></details>
+  <details class="r"><summary>Can I help without code?</summary><p>Yes: test the installer on your hardware, file one good issue, or pick a <b>good first issue</b>. The marathon is held in public on GitHub.</p></details>
 </div></section>
 
-<section id="how" style="padding-top:0"><div class="wrap">
-  <h2 class="risein">From zero to a clean cut in minutes.</h2>
-  <p class="sub risein">No tutorials required, no signup wall. Three steps and you're editing.</p>
-  <div class="steps">
-    <div class="step risein"><span class="thumb"><img src="art/hero-mini.webp" alt=""></span><h3>Download the installer</h3><p>One 99 MB file from <a href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">Releases</a>. Everything's inside — Electron runtime, FFmpeg engine, the app.</p></div>
-    <div class="step risein"><span class="thumb"><img src="art/hero-mini.webp" alt=""></span><h3>Run it</h3><p>Windows may show SmartScreen (we're a new open project, not yet signed) — click <code>More info → Run anyway</code>. Pick a folder, done. Start Menu + Desktop shortcuts included.</p></div>
-    <div class="step risein"><span class="thumb"><img src="art/hero-mini.webp" alt=""></span><h3>Cut &amp; export</h3><p>Drop media onto the timeline, <code>Ctrl+K</code> to blade, keyframe a zoom, then <code>Ctrl+Shift+E</code> for Pro Export. Mp4 out, straight to your disk.</p></div>
+<div class="fin">
+  <div class="fbaj"></div>
+  <span class="latin" style="position:relative;display:block;margin-bottom:18px">Ⅵ · Eternitas — the end card</span>
+  <div class="mini r"><img src="icon.png" alt="The ApolloCut statue"></div>
+  <p style="color:var(--dim);max-width:480px;margin:0 auto;position:relative">Join the first generation of editors the blindfolded statue protects.</p>
+  <div class="ctas" style="position:relative">
+    <a class="btn hot big" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇ Get ApolloCut</a>
+    <a class="btn big" href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">★ Star on GitHub</a>
+    <a class="btn big ghost" href="https://github.com/esoexe/ApolloCut/issues" target="_blank" rel="noopener">↗ Report a bug</a>
   </div>
-</div></section>
-
-<section id="faq" class="with-pattern" style="padding-top:0"><div class="wrap faq">
-  <h2 class="risein">Questions, answered.</h2>
-  <p class="sub risein">The fine print — there isn't any. But here it is anyway.</p>
-  <details class="risein"><summary><span>Is it actually free? What's the catch?</span></summary><p>Truly free — MIT licensed, no premium tier, no trial timer, no watermark. The catch is only this: it's young software built in the open, and your issue reports make it sharper. That's the exchange.</p></details>
-  <details class="risein"><summary><span>Does it send my videos anywhere?</span></summary><p>No. ApolloCut is 100% local — no accounts, no telemetry, no network calls in the editor code. Drop an NDA project in there; it never leaves your disk.</p></details>
-  <details class="risein"><summary><span>Why does Windows warn me when I install?</span></summary><p>Because an unsigned open-source exe is "unknown" to SmartScreen. Click <b>More info → Run anyway</b>. The source is public — you can build the exact same installer yourself with <code>npm run dist</code> and compare.</p></details>
-  <details class="risein"><summary><span>How do I update later?</span></summary><p>Run the new installer over the old one — settings and projects survive. New releases are built automatically by GitHub Actions every time a <code>v*</code> tag is pushed.</p></details>
-</div></section>
-
-<section class="final" style="padding-top:0"><div class="wrap risein">
-  <div class="halo"><img src="art/hero.webp" alt="The ApolloCut guardian — the statue of free editing"></div>
-  <h2>The blindfold stays on. The editor stays free.</h2>
-  <p class="sub" style="margin:14px auto 34px">Join the first generation of ApolloCut editors.</p>
-  <div class="ctas">
-    <a class="btn hot big" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇&nbsp; Get ApolloCut for Windows</a>
-    <a class="btn big" href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">★&nbsp; Star on GitHub</a>
-    <a class="btn big" href="https://github.com/esoexe/ApolloCut/issues" target="_blank" rel="noopener">✦&nbsp; Report a bug</a>
-  </div>
-</div></section>
+</div>
 
 <footer><div class="wrap">
-  <span><img src="icon.png" alt="">© 2026 ApolloCut contributors</span>
-  <span>MIT License — free forever, for everyone</span>
+  <span>© 2026 apollocut · mit</span>
+  <span>engraved in the open · v1.5.0</span>
   <span class="fl">
-    <a href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">Repo</a>
-    <a href="https://github.com/esoexe/ApolloCut/releases" target="_blank" rel="noopener">Releases</a>
-    <a href="https://github.com/esoexe/ApolloCut/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contribute</a>
-    <a href="https://github.com/esoexe/ApolloCut/issues" target="_blank" rel="noopener">Issues</a>
+    <a href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">repo ↗</a>
+    <a href="https://github.com/esoexe/ApolloCut/releases" target="_blank" rel="noopener">releases ↗</a>
+    <a href="https://github.com/esoexe/ApolloCut/blob/main/docs/TUTORIAL.md" target="_blank" rel="noopener">tutorial ↗</a>
+    <a href="https://github.com/esoexe/ApolloCut/issues" target="_blank" rel="noopener">issues ↗</a>
   </span>
 </div></footer>
 
 <script>
-// mobile hamburger
+// hamburger
 const burger = document.getElementById('burger');
-const mm = document.getElementById('mobilemenu');
+const mm = document.getElementById('mm');
 burger.addEventListener('click', () => {
-  const open = mm.classList.toggle('open');
-  burger.classList.toggle('open', open);
-  burger.setAttribute('aria-expanded', open);
+  const o = mm.classList.toggle('o');
+  burger.classList.toggle('o', o);
+  burger.setAttribute('aria-expanded', o);
 });
-mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  mm.classList.remove('open'); burger.classList.remove('open'); burger.setAttribute('aria-expanded', 'false');
-}));
+mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mm.classList.remove('o'); burger.classList.remove('o'); }));
 
+// live release manifest → buttons/meta/gpu state
 fetch('https://api.github.com/repos/esoexe/ApolloCut/releases/latest')
   .then(r => r.ok ? r.json() : null)
   .then(d => {
     if (!d) return;
-    const exe = (d.assets || []).find(a => a.name.endsWith('.exe'));
+    const assets = d.assets || [];
     const v = (d.tag_name || '').replace(/^v/, '');
-    if (v) document.getElementById('ver').textContent = v;
+    if (v) {
+      document.getElementById('stat-ver').textContent = 'v' + v;
+      document.getElementById('dlmeta').innerHTML = 'v' + v + ' · windows · mac os · linux · mit';
+    }
+    const exe = assets.find(a => a.name.endsWith('.exe'));
     if (exe) {
-      const dl = document.getElementById('dl');
-      dl.href = exe.browser_download_url;
-      const mb = (exe.size / 1048576).toFixed(0);
-      const date = new Date(exe.created_at).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+      document.getElementById('dl').href = exe.browser_download_url;
       document.getElementById('dlmeta').innerHTML =
-        '<b>' + exe.name + '</b> · ' + mb + ' MB · released ' + date +
-        ' · <b>' + exe.download_count.toLocaleString() + '</b> downloads';
+        'v' + v + ' · ' + (exe.size/1048576).toFixed(0) + ' mb installer · <b>' + exe.download_count.toLocaleString() + '</b> downloads';
     }
-    document.querySelectorAll('.final .btn.hot').forEach(b => { if (exe) b.href = exe.browser_download_url; });
-    // direct per-platform links on the Desktop App card
-    const byPlat = {
-      exe: (d.assets || []).find(a => a.name.endsWith('.exe')),
-      dmg: (d.assets || []).find(a => a.name.endsWith('.dmg')),
-      appimage: (d.assets || []).find(a => a.name.endsWith('.AppImage'))
-    };
-    Object.entries(byPlat).forEach(([k, a]) => {
-      if (!a) return;
-      const btn = document.querySelector(`#plat-ctas [data-plat="${k}"]`);
-      if (btn) btn.href = a.browser_download_url;
+    [['.exe','exe'],['.dmg','dmg'],['.AppImage','appimage']].forEach(([suffix, key]) => {
+      const a2 = assets.find(a => a.name.endsWith(suffix));
+      if (!a2) return;
+      const btn = document.querySelector(`[data-plat="${key}"]`);
+      if (btn && key !== 'exe') {
+        const sz = btn.parentElement.querySelector('.sz');
+        if (sz) sz.textContent = sz.textContent.replace(/~?\d+(\.\d+)?\s*mb/gi, Math.round(a2.size/1048576) + ' MB');
+      }
     });
-    if (byPlat.dmg || byPlat.appimage) {
-      const anyBtn = document.querySelector('#plat-ctas .btn');
-      if (anyBtn) anyBtn.title = 'v' + v;
-    }
   }).catch(() => {});
 
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target);} }), {threshold:.12});
-document.querySelectorAll('.risein').forEach(el => io.observe(el));
+// entrance on scroll — single low-cost observer
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('v'); io.unobserve(e.target);} }), {threshold:.1});
+document.querySelectorAll('.r').forEach(el => io.observe(el));
 
+/* headline: word-by-word ceremonial rise (once, on load) */
 (function(){
-  const el = document.getElementById('tc'); let f = 0;
-  setInterval(() => {
-    f = (f + 1) % (24 * 30);
-    const s = Math.floor(f / 24) % 60, fr = f % 24;
-    el.textContent = '00:00:' + String(s).padStart(2,'0') + ':' + String(fr).padStart(2,'0');
-  }, 42);
+  const h1 = document.querySelector('h1');
+  if (!h1) return;
+  const walk = node => {
+    [...node.childNodes].forEach(n => {
+      if (n.nodeType === 3){
+        const words = n.textContent.split(/(\s+)/);
+        const frag = document.createDocumentFragment();
+        words.forEach(w => {
+          if (!/\S/.test(w)) { frag.appendChild(document.createTextNode(w)); return; }
+          const s = document.createElement('span'); s.className = 'w'; s.textContent = w;
+          frag.appendChild(s);
+        });
+        n.replaceWith(frag);
+      } else walk(n);
+    });
+  };
+  walk(h1);
+  h1.querySelectorAll('.w').forEach((s, i) => s.style.animationDelay = (0.08 + i * 0.09) + 's');
+})();
+
+/* terminal chip: live typing, once */
+(function(){
+  const span = document.querySelector('.cmd span');
+  if (!span) return;
+  const full = span.textContent.trim();
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) { span.textContent = full; return; }
+  span.classList.add('ty');
+  span.textContent = '';
+  let i = 0;
+  const iv = setInterval(() => {
+    span.textContent = full.slice(0, ++i);
+    if (i >= full.length){ clearInterval(iv); setTimeout(() => span.classList.remove('ty'), 2600); }
+  }, 24);
+})();
+
+/* meander divider: draws itself when it enters view */
+(function(){
+  const m = document.querySelector('.meander');
+  if (!m) return;
+  new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting){ m.classList.add('draw'); o.disconnect(); } }), {threshold:.4}).observe(m);
 })();
 </script>
 </body>
