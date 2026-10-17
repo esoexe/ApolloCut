@@ -177,13 +177,33 @@ UI.aboutDialog = () => UI.dialog({
   body: `<div class="about-ic">
       <img src="assets/icon-128.png" width="64" height="64" alt="Apollo" style="border-radius:14px">
       <div><div style="font-size:17px;font-weight:700">ApolloCut</div>
-      <div class="dim">v1.0 — free &amp; open-source desktop video editor</div></div>
+      <div class="dim">v1.4.0 — free &amp; open-source desktop video editor</div></div>
     </div>
-    <p>Named after <b>Apollo</b> — Greek god of the arts, music and light — fitting patron for an editor made of light and sound.</p>
+    <p>The blindfolded classical head — a free, open editor made of light and sound, in the spirit of the Greek masters.</p>
     <p style="margin-top:8px">Multi-track timeline · real-time compositing · keyframed effects · audio mixing · FFmpeg render engine (MP4 / H.265 / ProRes / WebM). Everything runs locally — your media never leaves your machine.</p>
     <p class="dim" style="margin-top:10px">MIT License — free forever, for everyone.</p>`,
   ok: 'Close', cancel: false
 });
+
+
+UI.welcomeDialog = (always) => {
+  const seen = localStorage.getItem('apollocut:welcomed');
+  if (seen && !always) return;
+  localStorage.setItem('apollocut:welcomed', '1');
+  UI.dialog({
+    title: 'Welcome to ApolloCut ⚖',
+    body: `<style>.ws{display:flex;gap:12px;align-items:flex-start;margin:10px 0}.wsn{flex:none;width:26px;height:26px;border-radius:8px;background:linear-gradient(120deg,#8f6bff,#6f4fe0);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}</style>
+      <div class="about-ic"><img src="assets/icon-128.png" width="56" height="56" style="border-radius:12px">
+        <div><div style="font-size:16px;font-weight:700">Your studio is ready.</div>
+        <div class="dim">A demo project loaded itself in the bin — slice it up freely.</div></div></div>
+      <div class="ws"><div class="wsn">1</div><div><b>Import</b> your media — drag files anywhere, or press <b>Ctrl+I</b>.</div></div>
+      <div class="ws"><div class="wsn">2</div><div><b>Cut</b> on the timeline — <b>Ctrl+K</b> razor · drag to trim · right-click to split audio.</div></div>
+      <div class="ws"><div class="wsn">3</div><div><b>Style</b> — click a clip, add effects &amp; keyframe in the Inspector. Try <b>Scrub</b> + GPU button for buttery preview.</div></div>
+      <div class="ws"><div class="wsn">4</div><div><b>Export</b> — <b>Ctrl+Shift+E</b> Pro Export: H.264 / HEVC / ProRes, straight from the bundled FFmpeg engine.</div></div>
+      <p class="dim" style="margin-top:12px;font-size:12.5px">Editing 4K? The <b>PX</b> button makes proxies for glass-smooth scrubbing. Scopes, LUTs, multicam &amp; nested sequences live in the View &amp; Clip menus. Shows once — reopen via Help → Welcome &amp; Quick Start.</p>`,
+    ok: 'Start editing', cancel: false
+  });
+};
 
 UI.seqSettingsDialog = () => {
   const P = State.project;
@@ -312,7 +332,8 @@ const MENUS = [
   { label: 'Help', items: [
     { label: 'Self-Test & Support Report…', action: () => window.Diagnostics && Diagnostics.run() },
     { label: 'Keyboard Shortcuts', action: () => UI.shortcutsDialog() },
-    { label: 'About ApolloCut Ω', action: () => UI.aboutDialog() }
+    { label: 'Welcome & Quick Start…', action: () => UI.welcomeDialog(true) },
+    { label: 'About ApolloCut', action: () => UI.aboutDialog() }
   ]}
 ];
 
@@ -668,10 +689,10 @@ async function loadDemo(placeOnTimeline=true){
     ctx.fillStyle = g; ctx.fillRect(0, 0, 640, 360);
     const g2 = ctx.createLinearGradient(0, 120, 640, 260);
     g2.addColorStop(0, '#8f6bff'); g2.addColorStop(1, '#e77bff');
-    ctx.fillStyle = g2; ctx.font = '700 130px Georgia, serif'; ctx.textAlign = 'center';
-    ctx.fillText('Ω', 320, 250);
-    ctx.fillStyle = '#cfc8ff'; ctx.font = '600 30px system-ui';
-    ctx.fillText('APOLLOCUT', 320, 315);
+    ctx.fillStyle = g2; ctx.font = '700 74px Georgia, serif'; ctx.textAlign = 'center';
+    ctx.fillText('APOLLOCUT', 320, 230);
+    ctx.fillStyle = '#cfc8ff'; ctx.font = '600 26px system-ui';
+    ctx.fillText('FREE · OPEN SOURCE · DESKTOP VIDEO EDITOR', 320, 300);
   }
   try {
     const files = [
@@ -770,13 +791,13 @@ function boot(){
   else State.setTime(0);
 
   TL.zoomFit();
-  UI.status('Ready — Ω ApolloCut. Drop media anywhere, or drag it straight to the timeline.');
+  UI.status('Ready — ApolloCut. Drop media anywhere, or drag it straight to the timeline.');
 
   setInterval(doAutosave, 30000);
-  window.addEventListener('beforeunload', e => {
-    doAutosave();
-    let clips = 0; State.eachClip(() => clips++);
-    if (clips){ e.preventDefault(); e.returnValue = ''; }
+  setTimeout(() => UI.welcomeDialog(false), 900);
+  window.addEventListener('beforeunload', () => {
+    try { doAutosave(); } catch(e){}
+    // never block window close — autosave runs every 30 s and once more here
   });
 }
 

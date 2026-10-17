@@ -72,6 +72,8 @@ Releases are the official, permanent home of ApolloCut binaries — every versio
 
 ▶️ **Watch the promo** (12 s): [docs/promo.mp4](docs/promo.mp4) · Launching ApolloCut or writing about it? Everything you need is in [docs/LAUNCH-KIT.md](docs/LAUNCH-KIT.md).
 
+📘 **New editor?** → [docs/TUTORIAL.md](docs/TUTORIAL.md) (first 10 minutes) · ⌨️ [docs/SHORTCUTS.md](docs/SHORTCUTS.md)
+
 ## 🔨 Build from source
 
 ```bash

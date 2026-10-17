@@ -1,7 +1,7 @@
 {
   "name": "apollocut",
   "productName": "ApolloCut",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "description": "ApolloCut \u2014 the free & open-source desktop video editor. Non-linear editing, keyframed effects, audio mixing and a bundled FFmpeg pro render engine.",
   "main": "main/main.js",
   "license": "MIT",
