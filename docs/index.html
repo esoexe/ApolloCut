@@ -34,21 +34,25 @@ nav ul a:hover{color:#fff}
 .btn.hot:hover{box-shadow:0 10px 32px -6px rgba(143,107,255,.7)}
 
 /* ---------- hero ---------- */
-header{padding:150px 0 60px;position:relative}
-header::before{content:"";position:absolute;inset:-60px 0 0;background:radial-gradient(900px 480px at 78% 18%,rgba(143,107,255,.28),transparent 62%),radial-gradient(700px 420px at 8% 90%,rgba(231,123,255,.14),transparent 60%);pointer-events:none}
-header .wrap{display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center}
-
-/* floating particles */
+header{padding:150px 0 40px;position:relative}
+header::before{content:"";position:absolute;inset:-60px 0 0;background:radial-gradient(900px 480px at 74% 30%,rgba(143,107,255,.26),transparent 62%),radial-gradient(620px 400px at 6% 92%,rgba(231,123,255,.13),transparent 60%);pointer-events:none}
+header .wrap{display:grid;grid-template-columns:1.04fr .96fr;gap:56px;align-items:center}
 .pt{position:absolute;width:4px;height:4px;border-radius:50%;background:#d8caff;opacity:.5;animation:rise 9s linear infinite}
 @keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.55}85%{opacity:.5}100%{transform:translateY(-340px);opacity:0}}
 
-/* statue portrait */
-.stat{position:relative;width:max-content}
-.stat .tile{width:200px;height:200px;border-radius:42px;position:relative;overflow:hidden;box-shadow:0 30px 70px -18px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.14)}
-.stat .tile img{width:100%;height:100%;display:block}
-.stat::before{content:"";position:absolute;inset:-34px;border-radius:70px;background:radial-gradient(circle at 50% 40%,rgba(143,107,255,.45),transparent 68%);filter:blur(18px);animation:breath 4.5s ease-in-out infinite}
-@keyframes breath{0%,100%{opacity:.55;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}
-.stat .badge{position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--brand2);padding:5px 14px;border-radius:20px;white-space:nowrap;box-shadow:0 8px 24px -8px rgba(0,0,0,.7)}
+/* museum portrait column */
+.pcol{position:relative;width:max-content;margin:0 auto}
+.frame{position:relative;border-radius:26px;box-shadow:0 46px 110px -28px rgba(0,0,0,.9),0 0 0 1px rgba(143,107,255,.25)}
+.frame img{display:block;width:min(360px,74vw);border-radius:26px}
+.pcol::before{content:"";position:absolute;inset:-40px -60px;border-radius:60px;background:radial-gradient(circle at 50% 42%,rgba(143,107,255,.35),transparent 66%);filter:blur(24px);animation:breath 4.6s ease-in-out infinite;z-index:-1}
+@keyframes breath{0%,100%{opacity:.55;transform:scale(.98)}50%{opacity:1;transform:scale(1.02)}}
+.frame .tag{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--brand2);padding:6px 16px;border-radius:20px;white-space:nowrap;box-shadow:0 8px 24px -8px rgba(0,0,0,.7)}
+.chip{position:absolute;width:46px;height:46px;border-radius:12px;box-shadow:0 10px 26px -8px rgba(0,0,0,.8),0 0 0 1px rgba(190,160,255,.5)}
+.chip img{width:100%;height:100%;border-radius:12px;display:block}
+.chip.c1{top:6%;left:-34px;animation:floaty 5.2s ease-in-out infinite}
+.chip.c2{top:38%;right:-40px;animation:floaty 6.4s .8s ease-in-out infinite}
+.chip.c3{bottom:16%;left:-44px;animation:floaty 7.1s 1.6s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(-7px) rotate(-3deg)}50%{transform:translateY(9px) rotate(3deg)}}
 
 .kicker{display:inline-flex;gap:8px;align-items:center;background:rgba(143,107,255,.12);border:1px solid rgba(143,107,255,.4);color:#cabfff;font-size:12.5px;font-weight:800;letter-spacing:1.6px;padding:7px 15px;border-radius:20px;text-transform:uppercase}
 h1{font-size:clamp(42px,6vw,66px);line-height:1.04;margin:22px 0 16px;font-weight:900;letter-spacing:-1.2px;background:linear-gradient(110deg,#fff 30%,#cdbfff 55%,#8f6bff 85%);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -60,28 +64,49 @@ h1{font-size:clamp(42px,6vw,66px);line-height:1.04;margin:22px 0 16px;font-weigh
 .meta b{color:#cabfff}
 
 /* ---------- marquee ---------- */
-.strip{border-block:1px solid var(--line);background:linear-gradient(90deg,var(--bg1),#171030 50%,var(--bg1));overflow:hidden;padding:13px 0;margin:26px 0 0}
-.strip .track{display:flex;gap:44px;white-space:nowrap;animation:marq 28s linear infinite;font-weight:800;font-size:13px;letter-spacing:1.8px;color:var(--dim);text-transform:uppercase}
+.strip{border-block:1px solid var(--line);background:linear-gradient(90deg,var(--bg1),#171030 50%,var(--bg1));overflow:hidden;padding:10px 0;margin:26px 0 0}
+.strip .track{display:flex;gap:44px;white-space:nowrap;animation:marq 30s linear infinite;font-weight:800;font-size:13px;letter-spacing:1.8px;color:var(--dim);text-transform:uppercase;align-items:center}
 @keyframes marq{to{transform:translateX(-50%)}}
-.strip b{color:var(--brand2);margin-right:8px}
+.strip img{width:22px;height:22px;border-radius:6px;vertical-align:middle;margin-right:10px}
 
 /* ---------- sections ---------- */
 section{padding:88px 0}
 h2{font-size:clamp(30px,4vw,42px);font-weight:900;letter-spacing:-.8px;margin-bottom:14px}
 .sub{color:var(--dim);font-size:16px;max-width:640px;line-height:1.7;margin-bottom:44px}
+.with-pattern{position:relative}
+.with-pattern::before{content:"";position:absolute;inset:0;background:url('art-pattern.png') repeat;opacity:.5;pointer-events:none}
+.with-pattern .wrap{position:relative}
+
+/* feature grid with statuette watermark */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:linear-gradient(180deg,var(--panel),#150f2b);border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:transform .2s,border-color .25s,box-shadow .3s;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-6px);border-color:var(--brand);box-shadow:0 22px 44px -18px rgba(143,107,255,.4)}
+.card::after{content:"";position:absolute;right:-14px;bottom:-14px;width:74px;height:74px;background:url('art-chip.png') center/contain no-repeat;opacity:.28;filter:grayscale(35%) brightness(1.5);transition:opacity .3s}
+.card:hover::after{opacity:.6}
+.card .ic{font-size:26px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;background:rgba(143,107,255,.12);border:1px solid rgba(143,107,255,.35);border-radius:14px;margin-bottom:16px}
+.card h3{font-size:17px;margin-bottom:9px}
+.card p{color:var(--dim);font-size:14px;line-height:1.65}
+
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.fel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;text-align:center;transition:transform .25s,box-shadow .3s,border-color .25s}
+.fel:hover{transform:translateY(-8px);border-color:var(--brand2);box-shadow:0 26px 60px -20px rgba(231,123,255,.45)}
+.fel img{width:100%;border-radius:14px;display:block;box-shadow:0 14px 34px -12px rgba(0,0,0,.8)}
+.fel .cap{margin-top:16px;font-weight:900;font-size:15px;letter-spacing:3px;color:var(--brand2)}
+.fel .cap2{color:var(--dim2);font-size:12.5px;margin-top:4px}
 
 /* animated editor */
 .editor{background:linear-gradient(180deg,#191233,#120c26);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 40px 90px -30px rgba(0,0,0,.85);overflow:hidden;position:relative}
 .editor .bar{display:flex;gap:7px;align-items:center;height:38px;padding:0 16px;background:#0f0a20;border-bottom:1px solid var(--line)}
 .editor .dot{width:11px;height:11px;border-radius:50%}
 .editor .fname{margin-left:10px;color:var(--dim2);font-size:12px;font-weight:700}
-.editor .body{display:grid;grid-template-columns:1fr 290px;grid-template-rows:230px 190px;border-bottom:1px solid var(--line)}
-.editor .preview{background:#0a0716;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;grid-row:1;grid-column:1/3}
+.editor .body{display:grid;grid-template-rows:230px 190px;border-bottom:1px solid var(--line)}
+.editor .preview{background:#0a0716;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .editor .preview img{width:132px;opacity:.9;animation:prevbob 5s ease-in-out infinite}
 @keyframes prevbob{0%,100%{transform:translateY(-4px) scale(1)}50%{transform:translateY(4px) scale(1.03)}}
 .editor .tc{position:absolute;bottom:10px;left:14px;font-family:Consolas,monospace;font-size:12px;color:var(--cyan);background:rgba(0,0,0,.55);padding:2px 8px;border-radius:6px}
 .editor .gpu{position:absolute;top:10px;right:14px;font-size:11px;color:var(--green);background:rgba(57,217,141,.12);border:1px solid rgba(57,217,141,.4);padding:2px 8px;border-radius:10px;font-weight:800}
-.tl{background:#0d0920;padding:14px;display:flex;flex-direction:column;gap:10px;position:relative;grid-column:1/3}
+.tl{background:#0d0920;padding:14px;display:flex;flex-direction:column;gap:10px;position:relative}
 .tr{display:flex;gap:6px;height:46px}
 .clip{border-radius:7px;height:100%;position:relative;overflow:hidden}
 .clip i{position:absolute;left:8px;top:5px;font-style:normal;font-size:10px;font-weight:800;color:rgba(255,255,255,.85)}
@@ -91,39 +116,38 @@ h2{font-size:clamp(30px,4vw,42px);font-weight:900;letter-spacing:-.8px;margin-bo
 .ph{position:absolute;top:0;bottom:0;width:2px;background:var(--cyan);box-shadow:0 0 12px var(--cyan);animation:sweep 6s linear infinite;z-index:2}
 @keyframes sweep{from{left:4%}to{left:96%}}
 
-/* feature grid */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{background:linear-gradient(180deg,var(--panel),#150f2b);border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:transform .2s,border-color .25s,box-shadow .3s}
-.card:hover{transform:translateY(-6px);border-color:var(--brand);box-shadow:0 22px 44px -18px rgba(143,107,255,.4)}
-.card .ic{font-size:26px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;background:rgba(143,107,255,.12);border:1px solid rgba(143,107,255,.35);border-radius:14px;margin-bottom:16px}
-.card h3{font-size:17px;margin-bottom:9px}
-.card p{color:var(--dim);font-size:14px;line-height:1.65}
-
 /* banner showcase */
 .showcase img{width:100%;border-radius:var(--r);border:1px solid var(--line);box-shadow:0 40px 90px -30px rgba(0,0,0,.8);display:block}
 
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .step{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:26px;position:relative}
-.step .n{position:absolute;top:-15px;left:24px;background:linear-gradient(120deg,var(--brand),var(--brand2));width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900}
-.step h3{margin:8px 0 10px;font-size:16.5px}
+.step .thumb{position:absolute;top:-22px;left:24px;width:44px;height:44px;border-radius:12px;overflow:hidden;box-shadow:0 10px 26px -8px rgba(0,0,0,.8),0 0 0 2px var(--brand)}
+.step .thumb img{width:100%;height:100%;display:block}
+.step h3{margin:12px 0 10px;font-size:16.5px}
 .step p{color:var(--dim);font-size:14px;line-height:1.65}
 .step code{background:#0d0920;border:1px solid var(--line);padding:2px 7px;border-radius:6px;font-size:12.5px;color:#d8caff}
 
 /* faq */
 .faq details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-bottom:12px}
 .faq summary{cursor:pointer;font-weight:700;font-size:15.5px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.faq summary::before{content:"";width:20px;height:20px;background:url('art-chip.png') center/contain no-repeat;margin-right:12px;filter:grayscale(20%)}
+.faq summary span{flex:1}
 .faq summary::after{content:"+";color:var(--brand);font-size:20px;font-weight:900;transition:transform .2s}
 .faq details[open] summary::after{transform:rotate(45deg)}
 .faq details p{color:var(--dim);font-size:14.5px;line-height:1.7;margin-top:12px}
 
 /* final cta */
-.final{text-align:center;background:radial-gradient(700px 300px at 50% 100%,rgba(143,107,255,.22),transparent 65%)}
+.final{text-align:center;background:radial-gradient(700px 320px at 50% 100%,rgba(143,107,255,.22),transparent 65%)}
+.final .halo{width:210px;margin:0 auto 26px;animation:slowspin 26s linear infinite}
+.final .halo img{width:100%;display:block;filter:drop-shadow(0 20px 44px rgba(143,107,255,.45))}
+@keyframes slowspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .final h2{font-size:clamp(34px,5vw,54px)}
 .final .ctas{justify-content:center;margin-top:8px}
 
 footer{border-top:1px solid var(--line);padding:34px 0;color:var(--dim2);font-size:13.5px}
 footer .wrap{display:flex;gap:26px;flex-wrap:wrap;align-items:center}
+footer img{width:26px;height:26px;border-radius:8px;vertical-align:middle;margin-right:10px}
 footer .fl{margin-left:auto;display:flex;gap:22px}
 
 .risein{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
@@ -131,12 +155,11 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
 @media(max-width:900px){
   header .wrap{grid-template-columns:1fr}
   .grid{grid-template-columns:1fr 1fr}
-  .steps{grid-template-columns:1fr}
-  .editor .body{grid-template-columns:1fr;grid-template-rows:190px 70px 70px 70px}
-  .editor .preview{grid-column:1}
+  .steps,.gallery{grid-template-columns:1fr}
   nav ul li:nth-child(-n+3){display:none}
+  .pcol{margin-top:10px}
 }
-@media(max-width:600px){.grid{grid-template-columns:1fr}.stat{margin:0 auto}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -146,6 +169,7 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
   <span class="nm">Apollo<b>Cut</b></span>
   <ul>
     <li><a href="#features">Features</a></li>
+    <li><a href="#gallery">Gallery</a></li>
     <li><a href="#how">Get started</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a class="btn" href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">★ GitHub</a></li>
@@ -161,10 +185,6 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
   <span class="pt" style="left:90%;animation-delay:.7s"></span>
   <div class="wrap">
     <div>
-      <div class="stat" style="margin-bottom:34px">
-        <div class="tile"><img src="icon.png" alt="The blindfolded statue — ApolloCut's symbol"></div>
-        <span class="badge">⚖ free &amp; open-source · MIT</span>
-      </div>
       <span class="kicker">v<span id="ver">1.3.3</span> · Windows · no account, no cloud</span>
       <h1>Editing that belongs to <i>everyone</i>.</h1>
       <p class="lede">ApolloCut is a <b>Premiere-style desktop video editor</b> — multi-track timeline, keyframed effects, audio mixing and a real <b>FFmpeg render engine</b> — that never phones home, never asks for a subscription, and never will. The blindfold is our contract with you: <b>free forever</b>.</p>
@@ -175,44 +195,21 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
       <p class="meta" id="dlmeta">One 99 MB installer · everything bundled · Windows 10/11</p>
     </div>
 
-    <!-- live CSS editor mock -->
-    <div class="editor" aria-hidden="true">
-      <div class="bar">
-        <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
-        <span class="fname">ApolloCut — my-first-cut.apollocut.json</span>
+    <div class="pcol">
+      <div class="frame">
+        <img src="art-portrait.png" alt="The blindfolded statue — ApolloCut, edition MMXXVI">
+        <span class="tag">⚖ the statue of free editing</span>
       </div>
-      <div class="body">
-        <div class="preview">
-          <img src="icon.png" alt="">
-          <span class="tc" id="tc">00:00:00:00</span>
-          <span class="gpu">GPU ✓</span>
-        </div>
-        <div class="tl">
-          <span class="ph"></span>
-          <div class="tr">
-            <div class="clip" style="flex:2.6;background:linear-gradient(120deg,#8f6bff,#6a48d8)"><i>title-card.mp4</i></div>
-            <div class="clip" style="flex:1.2;background:linear-gradient(120deg,#e77bff,#b34fc9)"><i>b-roll</i></div>
-            <div class="clip" style="flex:2.1;background:linear-gradient(120deg,#41c7ff,#2f94c9)"><i>interview.mp4</i></div>
-          </div>
-          <div class="tr">
-            <div class="clip" style="flex:1.4;background:linear-gradient(120deg,#39d98d,#23a567)"><i>fx-grade</i></div>
-            <div class="clip" style="flex:2.9;background:linear-gradient(120deg,#8f6bff,#6a48d8)"><i>sequence</i></div>
-            <div class="clip" style="flex:1;background:linear-gradient(120deg,#ff9d5c,#d8703d)"><i>out</i></div>
-          </div>
-          <div class="tr">
-            <div class="wave">
-              <span style="height:40%"></span><span style="height:70%;animation-delay:.15s"></span><span style="height:55%;animation-delay:.3s"></span><span style="height:85%;animation-delay:.05s"></span><span style="height:60%;animation-delay:.45s"></span><span style="height:75%;animation-delay:.25s"></span><span style="height:45%"></span><span style="height:80%;animation-delay:.35s"></span><span style="height:50%;animation-delay:.1s"></span><span style="height:65%;animation-delay:.4s"></span><span style="height:90%;animation-delay:.2s"></span><span style="height:55%;animation-delay:.5s"></span><span style="height:72%;animation-delay:.15s"></span><span style="height:48%;animation-delay:.35s"></span><span style="height:62%;animation-delay:.05s"></span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <span class="chip c1"><img src="art-chip.png" alt=""></span>
+      <span class="chip c2"><img src="art-chip.png" alt=""></span>
+      <span class="chip c3"><img src="art-chip.png" alt=""></span>
     </div>
   </div>
 </header>
 
 <div class="strip"><div class="track">
-  <span><b>◆</b>non-linear multi-track editing</span><span><b>◆</b>keyframed effects · bezier easing</span><span><b>◆</b>h.264 · hevc · prores · webm</span><span><b>◆</b>100% local — media never leaves your machine</span><span><b>◆</b>no subscription · no telemetry</span><span><b>◆</b>MIT licensed, free forever</span>
-  <span><b>◆</b>non-linear multi-track editing</span><span><b>◆</b>keyframed effects · bezier easing</span><span><b>◆</b>h.264 · hevc · prores · webm</span><span><b>◆</b>100% local — media never leaves your machine</span><span><b>◆</b>no subscription · no telemetry</span><span><b>◆</b>MIT licensed, free forever</span>
+  <span><img src="art-chip.png" alt="">non-linear multi-track editing</span><span><img src="art-chip.png" alt="">keyframed effects · bezier easing</span><span><img src="art-chip.png" alt="">h.264 · hevc · prores · webm</span><span><img src="art-chip.png" alt="">100% local — media never leaves your machine</span><span><img src="art-chip.png" alt="">no subscription · no telemetry</span><span><img src="art-chip.png" alt="">MIT licensed, free forever</span>
+  <span><img src="art-chip.png" alt="">non-linear multi-track editing</span><span><img src="art-chip.png" alt="">keyframed effects · bezier easing</span><span><img src="art-chip.png" alt="">h.264 · hevc · prores · webm</span><span><img src="art-chip.png" alt="">100% local — media never leaves your machine</span><span><img src="art-chip.png" alt="">no subscription · no telemetry</span><span><img src="art-chip.png" alt="">MIT licensed, free forever</span>
 </div></div>
 
 <section id="features"><div class="wrap">
@@ -224,7 +221,65 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
     <div class="card risein"><div class="ic">🎚️</div><h3>Audio, mixed properly</h3><p>Per-clip gain, fades with curve handles, solo/mute per track, master live meters. The sound of your cut is not an afterthought.</p></div>
     <div class="card risein"><div class="ic">⚙️</div><h3>FFmpeg render engine</h3><p>Bundled pro export — H.264, HEVC, ProRes, WebM, plus WAV/MP3/GIF. Hardware-aware fallback chain means you always get a file out.</p></div>
     <div class="card risein"><div class="ic">⚡</div><h3>GPU-accelerated preview</h3><p>WebGL compositor with automatic CPU fallback. Scrub and play your graded timeline in real time on ordinary hardware.</p></div>
-    <div class="card risein"><div class="ic">🧠</div><h3>Optional local AI tools</h3><p>Whisper transcription and whisper-cut — entirely offline when you drop a model in. AI ambitious, force point.</p></div>
+    <div class="card risein"><div class="ic">🧠</div><h3>Optional local AI tools</h3><p>Whisper transcription and whisper-cut — entirely offline when you drop a model in. AI ambitions, zero spying.</p></div>
+  </div>
+</div></section>
+
+<section id="gallery" class="with-pattern" style="padding-top:0"><div class="wrap">
+  <h2 class="risein">The museum of free editing.</h2>
+  <p class="sub risein">One statue, three commandments. This is the face you'll find on the app icon, the installer, this page — and nowhere near a paywall.</p>
+  <div class="gallery">
+    <div class="fel risein">
+      <img src="art-portrait.png" alt="ApolloCut — the museum portrait">
+      <div class="cap">FREE</div>
+      <div class="cap2">no subscription · no watermark · no trial timer</div>
+    </div>
+    <div class="fel risein">
+      <img src="art-duotone.png" alt="ApolloCut — the duotone print" style="transition:transform .4s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform=''">
+      <div class="cap">OPEN</div>
+      <div class="cap2">MIT source, fork it, remix it, ship it</div>
+    </div>
+    <div class="fel risein" style="display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 50% 40%,#241945,#140d28 80%)">
+      <img src="art-halo.png" alt="ApolloCut — the halo medal" style="box-shadow:none;border-radius:0;width:78%;margin:0 auto;animation:slowspin 30s linear infinite">
+      <div class="cap">YOURS</div>
+      <div class="cap2">100% local — media never leaves your disk</div>
+    </div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <h2 class="risein">Inside the app.</h2>
+  <p class="sub risein">A quick taste of the ApolloCut desk — the statue keeps you company in the program monitor while the playhead does the laps.</p>
+  <div class="editor risein" aria-hidden="true">
+    <div class="bar">
+      <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
+      <span class="fname">ApolloCut — my-first-cut.apollocut.json</span>
+    </div>
+    <div class="body">
+      <div class="preview">
+        <img src="art-chip.png" alt="">
+        <span class="tc" id="tc">00:00:00:00</span>
+        <span class="gpu">GPU ✓</span>
+      </div>
+      <div class="tl">
+        <span class="ph"></span>
+        <div class="tr">
+          <div class="clip" style="flex:2.6;background:linear-gradient(120deg,#8f6bff,#6a48d8)"><i>title-card.mp4</i></div>
+          <div class="clip" style="flex:1.2;background:linear-gradient(120deg,#e77bff,#b34fc9)"><i>b-roll</i></div>
+          <div class="clip" style="flex:2.1;background:linear-gradient(120deg,#41c7ff,#2f94c9)"><i>interview.mp4</i></div>
+        </div>
+        <div class="tr">
+          <div class="clip" style="flex:1.4;background:linear-gradient(120deg,#39d98d,#23a567)"><i>fx-grade</i></div>
+          <div class="clip" style="flex:2.9;background:linear-gradient(120deg,#8f6bff,#6a48d8)"><i>sequence</i></div>
+          <div class="clip" style="flex:1;background:linear-gradient(120deg,#ff9d5c,#d8703d)"><i>out</i></div>
+        </div>
+        <div class="tr">
+          <div class="wave">
+            <span style="height:40%"></span><span style="height:70%;animation-delay:.15s"></span><span style="height:55%;animation-delay:.3s"></span><span style="height:85%;animation-delay:.05s"></span><span style="height:60%;animation-delay:.45s"></span><span style="height:75%;animation-delay:.25s"></span><span style="height:45%"></span><span style="height:80%;animation-delay:.35s"></span><span style="height:50%;animation-delay:.1s"></span><span style="height:65%;animation-delay:.4s"></span><span style="height:90%;animation-delay:.2s"></span><span style="height:55%;animation-delay:.5s"></span><span style="height:72%;animation-delay:.15s"></span><span style="height:48%;animation-delay:.35s"></span><span style="height:62%;animation-delay:.05s"></span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div></section>
 
@@ -236,22 +291,23 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
   <h2 class="risein">From zero to a clean cut in minutes.</h2>
   <p class="sub risein">No tutorials required, no signup wall. Three steps and you're editing.</p>
   <div class="steps">
-    <div class="step risein"><span class="n">1</span><h3>Download the installer</h3><p>One 99 MB file from <a href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">Releases</a>. Everything's inside — Electron runtime, FFmpeg engine, the app.</p></div>
-    <div class="step risein"><span class="n">2</span><h3>Run it</h3><p>Windows may show SmartScreen (we're a new open project, not yet signed) — click <code>More info → Run anyway</code>. Pick a folder, done. Start Menu + Desktop shortcuts included.</p></div>
-    <div class="step risein"><span class="n">3</span><h3>Cut &amp; export</h3><p>Drop media onto the timeline, <code>Ctrl+K</code> to blade, keyframe a zoom, then <code>Ctrl+Shift+E</code> for Pro Export. Mp4 out, straight to your disk.</p></div>
+    <div class="step risein"><span class="thumb"><img src="art-chip.png" alt=""></span><h3>Download the installer</h3><p>One 99 MB file from <a href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">Releases</a>. Everything's inside — Electron runtime, FFmpeg engine, the app.</p></div>
+    <div class="step risein"><span class="thumb"><img src="art-chip.png" alt=""></span><h3>Run it</h3><p>Windows may show SmartScreen (we're a new open project, not yet signed) — click <code>More info → Run anyway</code>. Pick a folder, done. Start Menu + Desktop shortcuts included.</p></div>
+    <div class="step risein"><span class="thumb"><img src="art-chip.png" alt=""></span><h3>Cut &amp; export</h3><p>Drop media onto the timeline, <code>Ctrl+K</code> to blade, keyframe a zoom, then <code>Ctrl+Shift+E</code> for Pro Export. Mp4 out, straight to your disk.</p></div>
   </div>
 </div></section>
 
-<section id="faq" style="padding-top:0"><div class="wrap faq">
+<section id="faq" class="with-pattern" style="padding-top:0"><div class="wrap faq">
   <h2 class="risein">Questions, answered.</h2>
   <p class="sub risein">The fine print — there isn't any. But here it is anyway.</p>
-  <details class="risein"><summary>Is it actually free? What's the catch?</summary><p>Truly free — MIT licensed, no premium tier, no trial timer, no watermark. The catch is only this: it's young software built in the open, and your issue reports make it sharper. That's the exchange.</p></details>
-  <details class="risein"><summary>Does it send my videos anywhere?</summary><p>No. ApolloCut is 100% local — no accounts, no telemetry, no network calls in the editor code. Drop an NDA project in there; it never leaves your disk.</p></details>
-  <details class="risein"><summary>Why does Windows warn me when I install?</summary><p>Because an unsigned open-source exe is "unknown" to SmartScreen. Click <b>More info → Run anyway</b>. The source is public — you can build the exact same installer yourself with <code>npm run dist</code> and compare.</p></details>
-  <details class="risein"><summary>How do I update later?</summary><p>Run the new installer over the old one — settings and projects survive. New releases are built automatically by GitHub Actions every time a <code>v*</code> tag is pushed.</p></details>
+  <details class="risein"><summary><span>Is it actually free? What's the catch?</span></summary><p>Truly free — MIT licensed, no premium tier, no trial timer, no watermark. The catch is only this: it's young software built in the open, and your issue reports make it sharper. That's the exchange.</p></details>
+  <details class="risein"><summary><span>Does it send my videos anywhere?</span></summary><p>No. ApolloCut is 100% local — no accounts, no telemetry, no network calls in the editor code. Drop an NDA project in there; it never leaves your disk.</p></details>
+  <details class="risein"><summary><span>Why does Windows warn me when I install?</span></summary><p>Because an unsigned open-source exe is "unknown" to SmartScreen. Click <b>More info → Run anyway</b>. The source is public — you can build the exact same installer yourself with <code>npm run dist</code> and compare.</p></details>
+  <details class="risein"><summary><span>How do I update later?</span></summary><p>Run the new installer over the old one — settings and projects survive. New releases are built automatically by GitHub Actions every time a <code>v*</code> tag is pushed.</p></details>
 </div></section>
 
 <section class="final" style="padding-top:0"><div class="wrap risein">
+  <div class="halo"><img src="art-halo.png" alt="The ApolloCut halo medal — statute of free editing"></div>
   <h2>The blindfold stays on. The editor stays free.</h2>
   <p class="sub" style="margin:14px auto 34px">Join the first generation of ApolloCut editors.</p>
   <div class="ctas">
@@ -262,7 +318,7 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
 </div></section>
 
 <footer><div class="wrap">
-  <span>© 2026 ApolloCut contributors</span>
+  <span><img src="icon.png" alt="">© 2026 ApolloCut contributors</span>
   <span>MIT License — free forever, for everyone</span>
   <span class="fl">
     <a href="https://github.com/esoexe/ApolloCut" target="_blank" rel="noopener">Repo</a>
@@ -273,7 +329,6 @@ footer .fl{margin-left:auto;display:flex;gap:22px}
 </div></footer>
 
 <script>
-// pull the freshest installer link + stats straight from the GitHub Releases API
 fetch('https://api.github.com/repos/esoexe/ApolloCut/releases/latest')
   .then(r => r.ok ? r.json() : null)
   .then(d => {
@@ -293,11 +348,9 @@ fetch('https://api.github.com/repos/esoexe/ApolloCut/releases/latest')
     document.querySelectorAll('.final .btn.hot').forEach(b => { if (exe) b.href = exe.browser_download_url; });
   }).catch(() => {});
 
-// gentle entrance animation
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target);} }), {threshold:.12});
 document.querySelectorAll('.risein').forEach(el => io.observe(el));
 
-// timecode counter on the mock editor
 (function(){
   const el = document.getElementById('tc'); let f = 0;
   setInterval(() => {
