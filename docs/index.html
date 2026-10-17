@@ -305,12 +305,14 @@ nav .wrap,footer .wrap{padding-left:max(28px,env(safe-area-inset-left));padding-
   <div class="plat risein">
     <div style="position:relative">
       <span class="kicker">Desktop App</span>
-      <div class="ptitle">Windows 10 / 11</div>
-      <p>One 99 MB installer — Electron runtime, FFmpeg render engine and the whole studio bundled. NSIS install wizard with Start Menu &amp; Desktop shortcuts. The statue guards every pixel, locally.</p>
-      <div class="ctas">
-        <a class="btn hot big" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇&nbsp; Download desktop app</a>
+      <div class="ptitle">Windows · macOS · Linux</div>
+      <p>One installer per platform — Electron runtime, FFmpeg render engine and the whole studio bundled. The statue guards every pixel, locally.</p>
+      <div class="ctas" id="plat-ctas">
+        <a class="btn hot big" data-plat="exe" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇&nbsp; Windows 10/11</a>
+        <a class="btn big" data-plat="dmg" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇&nbsp; macOS (DMG)</a>
+        <a class="btn big" data-plat="appimage" href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">⬇&nbsp; Linux (AppImage)</a>
       </div>
-      <p class="meta" style="margin-top:16px">macOS &amp; Linux: run from source — <code style="background:#0d0920;border:1px solid var(--line);padding:2px 7px;border-radius:6px;color:#d8caff">npm start</code></p>
+      <p class="meta" style="margin-top:16px">always latest from <a href="https://github.com/esoexe/ApolloCut/releases/latest" target="_blank" rel="noopener">GitHub Releases</a> · built from source by CI on every tag</p>
     </div>
     <img class="pimg" src="art/platform.webp" alt="The Apollo bust standing before four glowing window panes — desktop spirit">
   </div>
@@ -464,6 +466,21 @@ fetch('https://api.github.com/repos/esoexe/ApolloCut/releases/latest')
         ' · <b>' + exe.download_count.toLocaleString() + '</b> downloads';
     }
     document.querySelectorAll('.final .btn.hot').forEach(b => { if (exe) b.href = exe.browser_download_url; });
+    // direct per-platform links on the Desktop App card
+    const byPlat = {
+      exe: (d.assets || []).find(a => a.name.endsWith('.exe')),
+      dmg: (d.assets || []).find(a => a.name.endsWith('.dmg')),
+      appimage: (d.assets || []).find(a => a.name.endsWith('.AppImage'))
+    };
+    Object.entries(byPlat).forEach(([k, a]) => {
+      if (!a) return;
+      const btn = document.querySelector(`#plat-ctas [data-plat="${k}"]`);
+      if (btn) btn.href = a.browser_download_url;
+    });
+    if (byPlat.dmg || byPlat.appimage) {
+      const anyBtn = document.querySelector('#plat-ctas .btn');
+      if (anyBtn) anyBtn.title = 'v' + v;
+    }
   }).catch(() => {});
 
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target);} }), {threshold:.12});
