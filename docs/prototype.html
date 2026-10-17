@@ -6,6 +6,7 @@
 <title>ApolloCut — The Free & Open-Source Desktop Video Editor</title>
 <meta name="description" content="ApolloCut — Premiere-style non-linear editing, keyframed effects, GPU preview and a bundled FFmpeg render engine. 100% local, MIT, free forever.">
 <link rel="icon" href="icon.png" type="image/png">
+<link rel="preload" as="image" href="art/hero.webp">
 <style>
 /* ============ APOLLOCUT: GREEK × OPENCODE ============ */
 :root{
@@ -140,51 +141,59 @@ footer .fl{margin-left:auto;display:flex;gap:20px;font-family:var(--sans)}
 footer .fl a{color:var(--dim);font-size:13px}
 footer .fl a:hover{color:#fff}
 
-/* entrance */
-.r{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+/* entrance — cinematic slow curve */
+.r{opacity:0;transform:translateY(14px);transition:opacity .8s cubic-bezier(.22,.9,.28,1),transform .8s cubic-bezier(.22,.9,.28,1)}
 .r.v{opacity:1;transform:none}
 
-/* ============ live animation layer (transform-only, jank-proof) ============ */
-/* 1. hero plate: candlelight shimmer sweeps across every ~7s */
-.pf::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 42%,rgba(200,170,255,.14) 50%,transparent 58%);transform:translateX(-120%);animation:sheen 7s ease-in-out 1.6s infinite;pointer-events:none;z-index:2}
-@keyframes sheen{0%{transform:translateX(-120%)}38%{transform:translateX(120%)}100%{transform:translateX(120%)}}
-/* glow breathing behind plate, ultra-subtle, single gradient */
+/* ============ live animation layer (rAF, lerp-smoothed) ============ */
+/* pointer spotlight — soft violet torchlight following the mouse */
+#spot{position:fixed;top:0;left:0;width:640px;height:640px;position:absolute;pointer-events:none;z-index:0;
+  background:radial-gradient(circle at 50% 50%,rgba(143,107,255,.13),rgba(143,107,255,.05) 42%,transparent 70%);
+  border-radius:50%;opacity:0;transition:opacity .7s;mix-blend-mode:screen;left:-320px;top:-320px;position:fixed}
+body.spot-on #spot{opacity:1}
+@media (hover:none),(max-width:860px){#spot{display:none}}
+/* 1. hero plate: candlelight sheen, long smooth pass */
+.pf::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 44%,rgba(205,175,255,.175) 50%,transparent 56%);transform:translateX(-125%);animation:sheen 9s cubic-bezier(.55,.2,.35,.8) 1.6s infinite;pointer-events:none;z-index:2}
+@keyframes sheen{0%{transform:translateX(-125%) scaleX(1)}42%{transform:translateX(125%) scaleX(1)}100%{transform:translateX(125%)}}
+/* glow breathing behind plate, ultra-subtle */
 .plate::before{content:"";position:absolute;inset:-26px -34px;background:radial-gradient(55% 60% at 50% 45%,rgba(143,107,255,.20),transparent 72%);z-index:-1;animation:breath 5.4s ease-in-out infinite}
 @keyframes breath{0%,100%{opacity:.6}50%{opacity:1}}
 /* gold corners slowly pulse once set */
 .coe{animation:coep 6s ease-in-out infinite}
 .coe.tr{animation-delay:1.5s}.coe.br{animation-delay:3s}.coe.bl{animation-delay:4.5s}
 @keyframes coep{0%,100%{opacity:.55}50%{opacity:1}}
-/* 2. meander: draws itself in, then rests as a printed border */
+/* 2. meander draws itself */
 .meander path{stroke-dasharray:260;stroke-dashoffset:260}
-.meander.draw path{animation:drawme 1.6s ease-out forwards}
+.meander.draw path{animation:drawme 1.8s cubic-bezier(.4,0,.2,1) forwards}
 @keyframes drawme{to{stroke-dashoffset:0}}
-/* 3. hero headline: word-by-word ceremonial rise (set by JS) */
-h1 .w{display:inline-block;opacity:0;transform:translateY(22px);animation:wordup .7s cubic-bezier(.2,.7,.2,1) forwards}
+/* 3. hero headline: word-by-word ceremonial rise */
+h1 .w{display:inline-block;opacity:0;transform:translateY(24px);animation:wordup .8s cubic-bezier(.22,.9,.24,1) forwards}
 @keyframes wordup{to{opacity:1;transform:none}}
-/* 4. terminal chip: live typing (JS) with blinking caret */
+/* 4. terminal chip caret */
 .cmd span.ty::after{content:"▌";color:var(--vio);animation:caret 1s steps(1) infinite;margin-left:2px}
 @keyframes caret{0%,49%{opacity:1}50%,100%{opacity:0}}
-/* 5. laurel sway — ceremonial, ±2° */
+/* 5. laurel sway */
 .laurel{animation:sway 7s ease-in-out infinite;transform-origin:50% 85%}
 @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
-/* 6. end-card bust: slow courtly float */
+/* 6. end-card bust float */
 .fin .mini img{animation:floaty 8s ease-in-out infinite}
 @keyframes floaty{0%,100%{transform:translateY(-6px)}50%{transform:translateY(8px)}}
-/* 7. plates in the gallery breathe on hover */
-.trio .pc img{transition:transform .5s ease}
-.trio .pc:hover img{transform:scale(1.045)}
-/* 8. eyebrow chip: intro slide */
-.eyebrow{animation:eyebrow .9s ease-out .15s both}
+/* 7. gallery breathe on hover */
+.trio .pc img{transition:transform .6s cubic-bezier(.22,.9,.3,1)}
+.trio .pc:hover img{transform:scale(1.05)}
+/* 8. eyebrow intro */
+.eyebrow{animation:eyebrow 1s cubic-bezier(.22,.9,.3,1) .15s both}
 @keyframes eyebrow{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
-/* number tick on stats when revealed */
 .stat .n{transition:transform .4s ease}
-.stat.v .n,.r.v .n{animation:ntick .5s cubic-bezier(.2,1.4,.3,1)}
+.stat.v .n,.r.v .n{animation:ntick .55s cubic-bezier(.2,1.4,.3,1)}
 @keyframes ntick{from{transform:scale(.7)}to{transform:scale(1)}}
+/* parallax drift (JS-driven, transform-only) */
+.pf{will-change:transform}
 @media (prefers-reduced-motion: reduce){
   .pf::after,.plate::before,.coe,.laurel,.fin .mini img,.eyebrow{animation:none!important}
   h1 .w{opacity:1;transform:none;animation:none!important}
   .meander path{stroke-dashoffset:0!important;animation:none!important}
+  #spot{display:none!important}
 }
 
 /* ============ responsive ============ */
@@ -322,9 +331,9 @@ h1 .w{display:inline-block;opacity:0;transform:translateY(22px);animation:wordup
   <h2 class="r">Art that earns its discourse.</h2>
   <p class="sub r">Each ApolloCut plate is a full engraving folio — the same guardian bust, keeping watch over every craft inside the app.</p>
   <div class="trio">
-    <div class="pc r"><img src="art/feature-timeline.webp" alt="Chronos Aeternus — clockwork timeline engraving"><span class="lb">Ⅰ · CHRONOS</span></div>
-    <div class="pc r"><img src="art/feature-effects.webp" alt="Engraved bezier curves and keyframe handles"><span class="lb">Ⅱ · TVLISVA</span></div>
-    <div class="pc r"><img src="art/feature-audio.webp" alt="Harmonia Sonica — waveform laurel engraving"><span class="lb">Ⅲ · HARMONIA</span></div>
+    <div class="pc r"><img loading="lazy" decoding="async" src="art/feature-timeline.webp" alt="Chronos Aeternus — clockwork timeline engraving"><span class="lb">Ⅰ · CHRONOS</span></div>
+    <div class="pc r"><img loading="lazy" decoding="async" src="art/feature-effects.webp" alt="Engraved bezier curves and keyframe handles"><span class="lb">Ⅱ · TVLISVA</span></div>
+    <div class="pc r"><img loading="lazy" decoding="async" src="art/feature-audio.webp" alt="Harmonia Sonica — waveform laurel engraving"><span class="lb">Ⅲ · HARMONIA</span></div>
   </div>
 </div></section></div>
 
@@ -480,6 +489,54 @@ document.querySelectorAll('.r').forEach(el => io.observe(el));
   const m = document.querySelector('.meander');
   if (!m) return;
   new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting){ m.classList.add('draw'); o.disconnect(); } }), {threshold:.4}).observe(m);
+})();
+
+/* ========= rAF-lerped motion engine: pointer spotlight + scroll parallax ========= */
+(function(){
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarse = matchMedia('(hover: none)').matches || innerWidth < 861;
+  if (reduced) return;
+
+  // --- spotlight (desktop pointer only) ---
+  const spot = document.createElement('div');
+  spot.id = 'spot';
+  document.body.appendChild(spot);
+  let sx = innerWidth / 2, sy = innerHeight * 0.32, tx = sx, ty = sy, moved = false;
+  if (!coarse){
+    addEventListener('pointermove', e => {
+      tx = e.clientX; ty = e.clientY;
+      if (!moved){ moved = true; document.body.classList.add('spot-on'); }
+    }, { passive: true });
+    addEventListener('pointerleave', () => document.body.classList.remove('spot-on'));
+  }
+
+  // --- scroll parallax drift on hero plate + gallery frame (no layout thrash) ---
+  const heroFrame = document.querySelector('.plate .pf');
+  const panTop = (() => {
+    const sec = document.getElementById('pantheon');
+    return sec ? sec.offsetTop : Infinity;
+  })();
+  let sY = window.scrollY, heroDrift = 0, panDrift = 0;
+  addEventListener('scroll', () => { sY = window.scrollY; }, { passive: true });
+
+  (function loop(){
+    // lerp spotlight → always smooth cursor chase
+    sx += (tx - sx) * 0.075; sy += (ty - sy) * 0.075;
+    if (moved) spot.style.transform = `translate3d(${sx - 320}px, ${sy - 320}px, 0)`;
+
+    // hero plate drifts ±18px as page leaves/enters top
+    const heroTarget = coarse ? 0 : Math.max(-18, Math.min(18, -sY * 0.045));
+    heroDrift += (heroTarget - heroDrift) * 0.09;
+    if (heroFrame) heroFrame.style.transform = `translate3d(0, ${heroDrift.toFixed(2)}px, 0)`;
+
+    // gallery section frame drifts opposite, ±12px (uses cached static offsetTop)
+    const panEl = document.getElementById('pantheon');
+    const panTarget = (!coarse && panEl) ? Math.max(-12, Math.min(12, (sY - panTop + innerHeight * 0.5) * 0.028)) : 0;
+    panDrift += (panTarget - panDrift) * 0.09;
+    if (panEl) panEl.style.transform = `translate3d(0, ${panDrift.toFixed(2)}px, 0)`;
+
+    requestAnimationFrame(loop);
+  })();
 })();
 </script>
 </body>
