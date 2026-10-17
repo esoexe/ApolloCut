@@ -396,8 +396,22 @@ document.querySelectorAll('.r').forEach(el => io.observe(el));
   zones.forEach(z => z.classList.add('anim-paused'));
   const zo = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('anim-paused', !e.isIntersecting)), {threshold:.04, rootMargin:'90px'});
   zones.forEach(z => zo.observe(z));
+  setTimeout(() => zones.forEach(z => { const r = z.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) z.classList.remove('anim-paused'); }), 2000);
+})();
+
+/* typed terminal — types once, then the caret retires */
+(function(){
+  const el = document.getElementById('typed');
+  if (!el) return;
+  const full = el.textContent.trim();
   const cr = document.getElementById('tcaret');
-  const iv = setInterval(() => { el.textContent = full.slice(0, ++i); if (i >= full.length){ clearInterval(iv); setTimeout(() => cr && (cr.style.display = 'none'), 4200); } }, 34);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  el.textContent = '';
+  let i = 0;
+  const iv = setInterval(() => {
+    el.textContent = full.slice(0, ++i);
+    if (i >= full.length){ clearInterval(iv); setTimeout(() => cr && (cr.style.display = 'none'), 4200); }
+  }, 34);
 })();
 
 /* timecode — beats only while the studio is visible */
